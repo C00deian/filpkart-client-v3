@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import PageWrapper from '@/components/layout/PageWrapper'
 import AddressStep from '@/features/checkout/components/AddressStep'
 import CartSummary from '@/features/cart/components/CartSummary'
 import { useCart } from '@/features/cart/hooks/useCart'
@@ -9,6 +8,7 @@ import type { AddressDto } from '@/types/user.types'
 import { orderService } from '@/services/orderService'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
 
 const STEPS = ['Login', 'Delivery Address', 'Order Summary', 'Payment']
 
@@ -36,7 +36,7 @@ const CheckoutPage = () => {
   if (!cart) return null
 
   return (
-    <PageWrapper>
+    <HomeLayout>
       {/* Stepper */}
       <div className="hidden md:flex items-center max-w-2xl mx-auto mb-6">
         {STEPS.map((s, i) => (
@@ -81,7 +81,7 @@ const CheckoutPage = () => {
         </div>
         {cart && <div className="lg:w-80"><CartSummary cart={cart} /></div>}
       </div>
-    </PageWrapper>
+    </HomeLayout>
   )
 }
 export default CheckoutPage

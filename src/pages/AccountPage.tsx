@@ -1,10 +1,11 @@
-import PageWrapper from '@/components/layout/PageWrapper'
+
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { useOrders } from '@/features/orders/hooks/useOrders'
 import OrderCard from '@/features/orders/components/OrderCard'
 import { User, Package, Heart, MapPin, Settings } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '@/routes/routePaths'
+import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
 
 const NAV_ITEMS = [
   { icon: Package, label: 'My Orders',   href: ROUTES.ORDERS },
@@ -18,7 +19,7 @@ const AccountPage = () => {
   const { data: orders } = useOrders()
 
   return (
-    <PageWrapper>
+   <HomeLayout>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         {/* Sidebar */}
         <aside className="bg-white rounded-sm shadow-card p-4 h-fit">
@@ -61,7 +62,8 @@ const AccountPage = () => {
           </div>
         </div>
       </div>
-    </PageWrapper>
+   </HomeLayout>
+    
   )
 }
 export default AccountPage

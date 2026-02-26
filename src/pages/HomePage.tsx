@@ -1,15 +1,21 @@
-import PageWrapper from '@/components/layout/PageWrapper'
-import HeroBanner from '@/features/home/components/HeroBanner'
-import CategoryGrid from '@/features/home/components/CategoryGrid'
-import DealOfTheDay from '@/features/home/components/DealOfTheDay'
+
+import HeroBanner from "@/features/home/components/HeroBanner";
+import CategoryGrid from "@/features/home/components/CategoryGrid";
+import DealOfTheDay from "@/features/home/components/DealOfTheDay";
+import HomeLayout from "@/components/layout/Header/components/HomeLayout/HomeLayout";
+import HeaderTop from "@/components/layout/Header/components/HomeLayout/HeaderTop";
 
 const HomePage = () => (
-  <PageWrapper>
+  <>
+     <HeaderTop />
+  <HomeLayout>
     <div className="space-y-4">
       <HeroBanner />
       <CategoryGrid />
       <DealOfTheDay />
     </div>
-  </PageWrapper>
-)
-export default HomePage
+  </HomeLayout>
+  </>
+
+);
+export default HomePage;

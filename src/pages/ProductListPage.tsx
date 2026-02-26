@@ -1,4 +1,3 @@
-import PageWrapper from '@/components/layout/PageWrapper'
 import { useSearchParams } from 'react-router-dom'
 import { useProducts } from '@/features/products/hooks/useProducts'
 import ProductFilter from '@/features/products/components/ProductFilter'
@@ -6,6 +5,7 @@ import ProductSort from '@/features/products/components/ProductSort'
 import ProductCard from '@/components/shared/ProductCard'
 import { ProductCardSkeleton } from '@/components/ui/Skeleton'
 import { Package } from 'lucide-react'
+import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
 
 const ProductListPage = () => {
   const [searchParams] = useSearchParams()
@@ -14,7 +14,7 @@ const ProductListPage = () => {
   const category = searchParams.get('category')
 
   return (
-    <PageWrapper fullWidth>
+    <HomeLayout>
       <div className="max-w-[1200px] mx-auto px-4 py-4">
         <div className="flex gap-4">
           <ProductFilter />
@@ -51,7 +51,7 @@ const ProductListPage = () => {
           </div>
         </div>
       </div>
-    </PageWrapper>
+    </HomeLayout>
   )
 }
 export default ProductListPage

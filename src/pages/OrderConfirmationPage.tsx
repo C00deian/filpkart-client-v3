@@ -1,9 +1,9 @@
-import PageWrapper from '@/components/layout/PageWrapper'
 import OrderConfirmation from '@/features/orders/components/OrderConfirmation'
+import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
 
 const OrderConfirmationPage = () => (
-  <PageWrapper>
+  <HomeLayout>
     <OrderConfirmation />
-  </PageWrapper>
+  </HomeLayout>
 )
 export default OrderConfirmationPage

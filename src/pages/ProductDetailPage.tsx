@@ -1,9 +1,9 @@
-import PageWrapper from '@/components/layout/PageWrapper'
+import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
 import ProductDetail from '@/features/products/components/ProductDetail'
 
 const ProductDetailPage = () => (
-  <PageWrapper>
+  <HomeLayout>
     <ProductDetail />
-  </PageWrapper>
+  </HomeLayout>
 )
 export default ProductDetailPage

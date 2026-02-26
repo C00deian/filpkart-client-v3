@@ -1,16 +1,17 @@
-import PageWrapper from '@/components/layout/PageWrapper'
+
 import { useOrders } from '@/features/orders/hooks/useOrders'
 import OrderCard from '@/features/orders/components/OrderCard'
 import { Package } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '@/routes/routePaths'
 import { Skeleton } from '@/components/ui/Skeleton'
+import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
 
 const OrdersPage = () => {
   const { data: orders, isLoading } = useOrders()
 
   return (
-    <PageWrapper>
+    <HomeLayout>
       <h1 className="text-xl font-bold text-slate-900 mb-4">My Orders</h1>
 
       {isLoading ? (
@@ -31,7 +32,7 @@ const OrdersPage = () => {
           {orders.map(order => <OrderCard key={order.id} order={order} />)}
         </div>
       )}
-    </PageWrapper>
+    </HomeLayout>
   )
 }
 export default OrdersPage

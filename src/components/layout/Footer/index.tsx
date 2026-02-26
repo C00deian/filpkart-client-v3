@@ -1,22 +1,49 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const footerLinks = {
-  About:  ['Contact Us', 'About Us', 'Careers', 'FlipShop Stories', 'Press', 'Corporate Information'],
-  Help:   ['Payments', 'Shipping', 'Cancellation & Returns', 'FAQ', 'Report Infringement'],
-  Policy: ['Return Policy', 'Terms of Use', 'Security', 'Privacy', 'Sitemap', 'EPR Compliance'],
-  Social: ['Facebook', 'Twitter', 'YouTube'],
-}
+  About: [
+    "Contact Us",
+    "About Us",
+    "Careers",
+    "FlipShop Stories",
+    "Press",
+    "Corporate Information",
+  ],
+  Help: [
+    "Payments",
+    "Shipping",
+    "Cancellation & Returns",
+    "FAQ",
+    "Report Infringement",
+  ],
+  Policy: [
+    "Return Policy",
+    "Terms of Use",
+    "Security",
+    "Privacy",
+    "Sitemap",
+    "EPR Compliance",
+  ],
+  Social: ["Facebook", "Twitter", "YouTube"],
+};
 
 const Footer = () => (
   <footer className="bg-[#172337] text-white mt-auto">
     <div className="max-w-[1200px] mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
       {Object.entries(footerLinks).map(([section, links]) => (
         <div key={section}>
-          <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-3">{section}</p>
+          <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            {section}
+          </p>
           <ul className="space-y-2">
-            {links.map(link => (
+            {links.map((link) => (
               <li key={link}>
-                <a href="#" className="text-xs text-slate-300 hover:text-white transition-colors">{link}</a>
+                <a
+                  href="#"
+                  className="text-xs text-slate-300 hover:text-white transition-colors"
+                >
+                  {link}
+                </a>
               </li>
             ))}
           </ul>
@@ -40,5 +67,5 @@ const Footer = () => (
       </div>
     </div>
   </footer>
-)
-export default Footer
+);
+export default Footer;

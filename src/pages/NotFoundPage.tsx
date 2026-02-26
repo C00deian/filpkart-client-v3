@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom'
 import { ROUTES } from '@/routes/routePaths'
-import PageWrapper from '@/components/layout/PageWrapper'
 
 const NotFoundPage = () => (
-  <PageWrapper>
+
     <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
       <div className="text-8xl font-bold text-primary/20">404</div>
       <h1 className="text-2xl font-bold text-slate-800">Page Not Found</h1>
@@ -13,6 +12,5 @@ const NotFoundPage = () => (
         Go to Homepage
       </Link>
     </div>
-  </PageWrapper>
 )
 export default NotFoundPage
