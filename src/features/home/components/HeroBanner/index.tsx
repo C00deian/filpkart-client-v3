@@ -52,7 +52,7 @@ const HeroBanner = () => {
   }, []);
 
   return (
-    <div className="mb-5 rounded-[20px] bg-[#ececef] px-1 py-8 sm:px-4 sm:py-10">
+    <div className="mb-5 rounded-[20px] px-1 py-8 sm:px-4 sm:py-10">
       <div className="relative mx-auto max-w-[980px]">
         <div className="relative h-[210px] sm:h-[300px]">
           {SLIDES.map((slide, index) => {

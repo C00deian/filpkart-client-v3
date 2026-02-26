@@ -19,20 +19,17 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex-1 max-w-xl relative hidden md:flex"
+      className="flex-1 max-w-[720px] relative hidden md:flex items-center h-10"
     >
+      <div className="absolute left-4 z-10 text-[#495057]">
+        <Search className="w-5 h-5" />
+      </div>
       <input
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Search for products, brands and more"
-        className="w-full pl-4 pr-10 py-2 text-sm text-slate-700 rounded shadow-sm outline-none focus:ring-2 focus:ring-white/30"
+        placeholder="Search for Products, Brands and More"
+        className="w-full h-full pl-12 pr-4 text-[15px] bg-[#f0f5ff]/50 text-[#212121] rounded-lg border border-primary/20 focus:border-primary focus:bg-white focus:shadow-[0_0_8px_rgba(40,116,240,0.1)] outline-none transition-all placeholder:text-[#878787]"
       />
-      <button
-        type="submit"
-        className="absolute right-0 h-full px-3 text-primary flex items-center"
-      >
-        <Search className="w-4 h-4" />
-      </button>
     </form>
   );
 };
