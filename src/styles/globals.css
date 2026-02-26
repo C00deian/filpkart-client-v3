@@ -3,10 +3,26 @@
 @tailwind utilities;
 
 @layer base {
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
   body {
-    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family:
+      "Roboto",
+      -apple-system,
+      BlinkMacSystemFont,
+      sans-serif;
     background-color: #f1f3f6;
     color: #212121;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

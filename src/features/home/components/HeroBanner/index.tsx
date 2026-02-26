@@ -1,60 +1,144 @@
-import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useState, useEffect } from "react";
+import image1 from "@/assets/images/flipkart-crausael/bb812ccfd8f9281e.png";
+import image2 from "@/assets/images/flipkart-crausael/2.png";
+import image3 from "@/assets/images/flipkart-crausael/3.png";
+import image4 from "@/assets/images/flipkart-crausael/4.png";
+import image5 from "@/assets/images/flipkart-crausael/5.png";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 const SLIDES = [
-  { id: 1, bg: 'from-blue-600 to-blue-800', title: 'Big Billion Days', subtitle: 'Deals up to 80% off', emoji: '🎉', badge: 'Limited Time' },
-  { id: 2, bg: 'from-orange-500 to-red-600', title: 'Electronics Sale', subtitle: 'Smartphones from ₹9,999', emoji: '📱', badge: 'Hot Deals' },
-  { id: 3, bg: 'from-purple-600 to-indigo-700', title: 'Fashion Week', subtitle: 'New arrivals every day', emoji: '👗', badge: 'New In' },
-]
+  {
+    title: "Alpine Lake",
+    image: image1,
+  },
+  {
+    title: "Misty Valley",
+    image: image2,
+  },
+  {
+    title: "Snow Peaks",
+    image: image3,
+  },
+  {
+    title: "Desert Light",
+    image: image4,
+  },
+  {
+    title: "Blue Ridge",
+    image: image5,
+  },
+];
+
+const getSlideOffset = (
+  index: number,
+  activeIndex: number,
+  total: number,
+): number => {
+  let offset = index - activeIndex;
+  if (offset > total / 2) offset -= total;
+  if (offset < -total / 2) offset += total;
+  return offset;
+};
 
 const HeroBanner = () => {
-  const [current, setCurrent] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => setCurrent(c => (c + 1) % SLIDES.length), 4000)
-    return () => clearInterval(timer)
-  }, [])
-
-  const slide = SLIDES[current]
+    const timer = setInterval(
+      () => setCurrentSlide((c) => (c + 1) % SLIDES.length),
+      4000,
+    );
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="relative h-52 md:h-64 rounded-sm overflow-hidden bg-gradient-to-r shadow-card">
-      {SLIDES.map((s, i) => (
-        <div key={s.id}
-          className={`absolute inset-0 bg-gradient-to-r ${s.bg} flex items-center px-8 md:px-16
-            transition-opacity duration-700 ${i === current ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="text-white">
-            <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">
-              {s.badge}
-            </span>
-            <h2 className="text-3xl md:text-5xl font-bold mb-2">{s.title}</h2>
-            <p className="text-white/90 text-lg md:text-xl">{s.subtitle}</p>
-            <button className="mt-4 bg-white text-primary font-bold px-6 py-2 rounded text-sm hover:bg-slate-100 transition">
-              Shop Now
-            </button>
-          </div>
-          <div className="ml-auto hidden md:flex text-8xl">{s.emoji}</div>
+    <div className="mb-5 rounded-[20px] bg-[#ececef] px-1 py-8 sm:px-4 sm:py-10">
+      <div className="relative mx-auto max-w-[980px]">
+        <div className="relative h-[210px] sm:h-[300px]">
+          {SLIDES.map((slide, index) => {
+            const offset = getSlideOffset(index, currentSlide, SLIDES.length);
+            const absOffset = Math.abs(offset);
+            if (absOffset > 2) return null;
+
+            const isActive = offset === 0;
+            const baseWidth = isActive
+              ? "min(100%, 640px)"
+              : absOffset === 1
+                ? "min(90%, 580px)"
+                : "min(80%, 540px)";
+            const scale = isActive ? 1 : absOffset === 1 ? 0.86 : 0.78;
+            const opacity = isActive ? 1 : absOffset === 1 ? 0.72 : 0.38;
+            const overlayOpacity = isActive ? 0 : absOffset === 1 ? 0.18 : 0.3;
+            const translateX =
+              offset === -2
+                ? "calc(-1 * clamp(165px, 36vw, 360px))"
+                : offset === -1
+                  ? "calc(-1 * clamp(92px, 21vw, 210px))"
+                  : offset === 1
+                    ? "clamp(92px, 21vw, 210px)"
+                    : offset === 2
+                      ? "clamp(165px, 36vw, 360px)"
+                      : "0px";
+
+            return (
+              <article
+                key={slide.title}
+                className="absolute left-1/2 top-1/2 overflow-hidden rounded-[20px] shadow-[0_20px_45px_rgba(15,23,42,0.18)] transition-all duration-700 ease-out"
+                style={{
+                  width: baseWidth,
+                  aspectRatio: "16 / 7",
+                  zIndex: 50 - absOffset,
+                  opacity,
+                  transform: `translate(-50%, -50%) translateX(${translateX}) scale(${scale})`,
+                }}
+                aria-hidden={!isActive}
+              >
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="h-full w-full object-cover"
+                />
+                <div
+                  className="absolute inset-0 bg-slate-900 transition-opacity duration-700"
+                  style={{ opacity: overlayOpacity }}
+                />
+              </article>
+            );
+          })}
         </div>
-      ))}
 
-      {/* Arrows */}
-      <button onClick={() => setCurrent(c => (c - 1 + SLIDES.length) % SLIDES.length)}
-        className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-1.5 transition">
-        <ChevronLeft className="w-4 h-4" />
-      </button>
-      <button onClick={() => setCurrent(c => (c + 1) % SLIDES.length)}
-        className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-1.5 transition">
-        <ChevronRight className="w-4 h-4" />
-      </button>
+        <div className="mt-4 flex items-center justify-center gap-5">
+          <button
+            onClick={() =>
+              setCurrentSlide((s) => (s - 1 + SLIDES.length) % SLIDES.length)
+            }
+            className="flex h-7 w-7 items-center justify-center rounded-full text-[18px] text-[#8f939b] transition hover:bg-white/60 hover:text-[#636a75]"
+            aria-label="Previous slide"
+          >
+          <ChevronLeftIcon />
+          </button>
 
-      {/* Dots */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-        {SLIDES.map((_, i) => (
-          <button key={i} onClick={() => setCurrent(i)}
-            className={`w-1.5 h-1.5 rounded-full transition-all ${i === current ? 'bg-white w-4' : 'bg-white/50'}`} />
-        ))}
+          <div className="flex items-center gap-2">
+            {SLIDES.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`h-2.5 w-2.5 rounded-full transition-all ${currentSlide === index ? "bg-[#6c6cff] scale-110" : "bg-[#cdced3] hover:bg-[#b9bac1]"}`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => setCurrentSlide((s) => (s + 1) % SLIDES.length)}
+            className="flex h-7 w-7 items-center justify-center rounded-full text-[18px] text-[#8f939b] transition hover:bg-white/60 hover:text-[#636a75]"
+            aria-label="Next slide"
+          >
+         <ChevronRightIcon />
+          </button>
+        </div>
       </div>
     </div>
-  )
-}
-export default HeroBanner
+  );
+};
+export default HeroBanner;

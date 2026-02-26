@@ -8,14 +8,13 @@ import SearchBar from "./components/SearchBar";
 import UserMenu from "./components/UserMenu";
 
 const Header = () => {
-  const { user, isAdmin, isLoading } = useAuth();   // ✅ use real state
+  const { user, isAdmin, isLoading } = useAuth(); // ✅ use real state
   const { itemCount } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-primary sticky top-0 z-50 shadow-md">
+    <header className="bg-primary sticky top-0 z-[60] shadow-md">
       <div className="max-w-[1200px] mx-auto px-4 h-14 flex items-center gap-4">
-
         {/* Logo */}
         <Link
           to={ROUTES.HOME}
@@ -27,7 +26,6 @@ const Header = () => {
 
           <span className="text-[10px] text-yellow-300 font-medium flex items-center gap-0.5">
             Explore <span className="text-yellow-300">Plus</span>
-
             <svg
               className="w-2.5 h-2.5 text-yellow-300"
               fill="currentColor"
@@ -43,7 +41,6 @@ const Header = () => {
 
         {/* Nav Actions */}
         <nav className="hidden md:flex items-center gap-6 ml-2 flex-shrink-0">
-
           {/* ✅ Loading-safe */}
           {!isLoading && <UserMenu />}
 
