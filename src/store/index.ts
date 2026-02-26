@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+const dummyReducer = (state = {}) => state;
+
 export const store = configureStore({
   reducer: {
-    // Add slice reducers here as you build features
-    // cart: cartReducer,
+    dummy: dummyReducer,
   },
 });
 

@@ -38,6 +38,15 @@ export interface OrderDto {
   items: OrderItemDto[]
 }
 
+export interface Order {
+  id: string
+  customerId: string
+  totalPrice: number
+  paymentStatus: 'SUCCESS' | 'PENDING' | 'FAILED'
+  orderStatus: 'PLACED' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED'
+  orderDate: string
+}
+
 export type OrderStatus =
   | 'PENDING' | 'CONFIRMED' | 'PROCESSING'
   | 'SHIPPED' | 'DELIVERED' | 'CANCELLED' | 'RETURNED'

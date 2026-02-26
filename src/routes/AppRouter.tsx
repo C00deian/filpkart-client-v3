@@ -15,8 +15,12 @@ const AccountPage          = lazy(() => import('@/pages/AccountPage'))
 const LoginPage            = lazy(() => import('@/pages/LoginPage'))
 const RegisterPage         = lazy(() => import('@/pages/RegisterPage'))
 const NotFoundPage         = lazy(() => import('@/pages/NotFoundPage'))
+
+const AdminLayout          = lazy(() => import('@/features/admin/components/AdminLayout'))
+const AdminDashboardPage   = lazy(() => import('@/pages/admin/AdminDashboardPage'))
 const AdminProductsPage    = lazy(() => import('@/pages/admin/AdminProductsPage'))
 const AdminOrdersPage      = lazy(() => import('@/pages/admin/AdminOrdersPage'))
+const AdminCategoriesPage  = lazy(() => import('@/pages/admin/AdminCategoriesPage'))
 
 const PageLoader = () => (
   <div className="flex h-screen items-center justify-center">
@@ -44,9 +48,13 @@ const AppRouter = () => (
       </Route>
 
       {/* Admin */}
-      <Route element={<AdminRoute />}>
-        <Route path={ROUTES.ADMIN.PRODUCTS} element={<AdminProductsPage />} />
-        <Route path={ROUTES.ADMIN.ORDERS}   element={<AdminOrdersPage />} />
+       <Route element={<AdminRoute />}>
+        <Route element={<AdminLayout />}>
+          <Route path={ROUTES.ADMIN.ROOT}       element={<AdminDashboardPage />} />
+          <Route path={ROUTES.ADMIN.PRODUCTS}   element={<AdminProductsPage />} />
+          <Route path={ROUTES.ADMIN.ORDERS}     element={<AdminOrdersPage />} />
+          <Route path={ROUTES.ADMIN.CATEGORIES} element={<AdminCategoriesPage />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

@@ -54,3 +54,20 @@ export type ImageType = {
   colorCode: string
   imageUrl: File | null
 }
+
+export interface CategoryFormType {
+  name: string
+  slug: string
+  imageUrl: string
+}
+
+export interface ProductFormType {
+  name: string
+  description: string
+  categoryId: number
+  brand: string
+  images: UploadedImageType[]
+  quantity: number
+  price: number
+  inStock: boolean
+}
