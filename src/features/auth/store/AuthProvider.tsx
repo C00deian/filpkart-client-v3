@@ -19,6 +19,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(userData)
   }, [])
 
+    const register = useCallback((userData: User) => {
+    setUser(userData)
+  }, [])
+
   const logout = useCallback(async () => {
     try { await authService.logout() } finally { setUser(null) }
   }, [])
@@ -29,7 +33,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     isAdmin: isAdminRole(user?.role),
     login,
     logout,
-  }), [user, isLoading, login, logout])
+    register
+   
+  }), [user, isLoading, login, logout , register])
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
