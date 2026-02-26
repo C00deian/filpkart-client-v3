@@ -1,0 +1,57 @@
+import { lazy, Suspense } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import { ROUTES } from './routePaths'
+import PrivateRoute from './PrivateRoute'
+import AdminRoute from './AdminRoute'
+
+const HomePage             = lazy(() => import('@/pages/HomePage'))
+const ProductListPage      = lazy(() => import('@/pages/ProductListPage'))
+const ProductDetailPage    = lazy(() => import('@/pages/ProductDetailPage'))
+const CartPage             = lazy(() => import('@/pages/CartPage'))
+const CheckoutPage         = lazy(() => import('@/pages/CheckoutPage'))
+const OrdersPage           = lazy(() => import('@/pages/OrdersPage'))
+const OrderConfirmationPage= lazy(() => import('@/pages/OrderConfirmationPage'))
+const AccountPage          = lazy(() => import('@/pages/AccountPage'))
+const LoginPage            = lazy(() => import('@/pages/LoginPage'))
+const RegisterPage         = lazy(() => import('@/pages/RegisterPage'))
+const NotFoundPage         = lazy(() => import('@/pages/NotFoundPage'))
+const AdminProductsPage    = lazy(() => import('@/pages/admin/AdminProductsPage'))
+const AdminOrdersPage      = lazy(() => import('@/pages/admin/AdminOrdersPage'))
+
+const PageLoader = () => (
+  <div className="flex h-screen items-center justify-center">
+    <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+  </div>
+)
+
+const AppRouter = () => (
+  <Suspense fallback={<PageLoader />}>
+    <Routes>
+      {/* Public */}
+      <Route path={ROUTES.HOME}           element={<HomePage />} />
+      <Route path={ROUTES.PRODUCTS}       element={<ProductListPage />} />
+      <Route path={ROUTES.PRODUCT_DETAIL} element={<ProductDetailPage />} />
+      <Route path={ROUTES.LOGIN}          element={<LoginPage />} />
+      <Route path={ROUTES.REGISTER}       element={<RegisterPage />} />
+
+      {/* Protected */}
+      <Route element={<PrivateRoute />}>
+        <Route path={ROUTES.CART}               element={<CartPage />} />
+        <Route path={ROUTES.CHECKOUT}           element={<CheckoutPage />} />
+        <Route path={ROUTES.ORDERS}             element={<OrdersPage />} />
+        <Route path="/order-confirmation"       element={<OrderConfirmationPage />} />
+        <Route path={ROUTES.ACCOUNT}            element={<AccountPage />} />
+      </Route>
+
+      {/* Admin */}
+      <Route element={<AdminRoute />}>
+        <Route path={ROUTES.ADMIN.PRODUCTS} element={<AdminProductsPage />} />
+        <Route path={ROUTES.ADMIN.ORDERS}   element={<AdminOrdersPage />} />
+      </Route>
+
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
+  </Suspense>
+)
+
+export default AppRouter
