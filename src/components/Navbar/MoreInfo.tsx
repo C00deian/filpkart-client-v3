@@ -5,6 +5,10 @@ import {
   ChevronDown,
   Package,
   Heart,
+  Store,
+  Bell,
+  LifeBuoy,
+  AlignEndVertical,
 
 } from "lucide-react";
 
@@ -29,9 +33,12 @@ const MoreInfo = () => {
 
   /* ✅ MENU CONFIG */
   const userMenuItems = [
-    { label: "My Profile", icon: User, to: '' },
-    { label: "My Orders", icon: Package, to: '' },
-    { label: "Wishlist", icon: Heart, to: '' },
+    { label: "Become a Seller", icon: Store, to: '' },
+    { label: "Notification Settings", icon: Bell, to: '' },
+    { label: "24x7 Customer Care", icon: LifeBuoy, to: '' },
+    { label: "Advertise on Flipkart", icon: AlignEndVertical, to: '' },
+   
+
   ];
 
 
