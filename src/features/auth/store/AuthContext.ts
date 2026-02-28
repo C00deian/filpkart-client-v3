@@ -2,7 +2,7 @@ import { createContext } from 'react'
 import type { User } from '@/types/auth.types'
 
 export interface AuthContextValue {
-  user: User | null
+  user: User 
   isLoading: boolean
   isAdmin: boolean
   login: (userData: User) => void

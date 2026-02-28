@@ -14,8 +14,4 @@ export const userService = {
     const res = await api.put<ApiResponse<UserProfile>>('/users/profile', data)
     return res.data.data
   },
-  getAddresses: async (): Promise<AddressDto[]> => {
-    const profile = await userService.getProfile()
-    return profile.addresses ?? []
-  },
 }
