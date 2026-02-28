@@ -3,6 +3,20 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+       keyframes: {
+      slideDown: {
+        '0%': { opacity: '0', transform: 'translateY(-8px)' },
+        '100%': { opacity: '1', transform: 'translateY(0)' },
+      },
+      slideUp: {
+        '0%': { opacity: '1', transform: 'translateY(0)' },
+        '100%': { opacity: '0', transform: 'translateY(-8px)' },
+      },
+    },
+    animation: {
+      slideDown: 'slideDown 0.3s ease-out',
+      slideUp: 'slideUp 0.2s ease-in',
+    },
       colors: {
         primary: '#2874f0',
         'primary-dark': '#1a5dc8',

@@ -1,90 +1,86 @@
-import { MapPin, Pencil, Trash2 } from 'lucide-react'
-import type { AddressDto } from '@/types/address.types'
-import { useAddresses } from '@/features/address/hooks/useAddresses'
+import { useState } from "react"
+import { MoreVertical, Pencil, Trash2 } from "lucide-react"
+import type { AddressDto } from "@/types/address.types"
 
 interface Props {
-  address:    AddressDto
-  selected?:  boolean
-  selectable?: boolean
-  onSelect?:  (address: AddressDto) => void
-  onEdit?:    (address: AddressDto) => void
+  address: AddressDto
+  onEdit: (addr: AddressDto) => void
+  onDelete?: (id: number) => void
 }
 
-const AddressCard = ({ address, selected, selectable, onSelect, onEdit }: Props) => {
-  const { deleteAddress, isDeleting } = useAddresses()
+const AddressCard = ({ address, onEdit, onDelete }: Props) => {
+  const [open, setOpen] = useState(false)
 
   return (
     <div
-      onClick={() => selectable && onSelect?.(address)}
-      className={`relative border rounded-lg p-4 transition-all
-        ${selectable ? 'cursor-pointer' : ''}
-        ${selected
-          ? 'border-primary bg-primary/5 shadow-sm'
-          : 'border-slate-200 hover:border-slate-300'}`}>
+      className="relative border border-[#e0e0e0] bg-white rounded-sm p-4 transition hover:shadow-sm"
+      onMouseLeave={() => setOpen(false)}
+    >
+      {/* Top Row */}
+      <div className="flex justify-between items-start">
 
-      {/* Radio indicator */}
-      {selectable && (
-        <div className={`absolute top-4 right-4 w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0
-          ${selected ? 'border-primary' : 'border-slate-300'}`}>
-          {selected && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
-        </div>
-      )}
+        {/* LEFT */}
+        <div className="flex-1 pr-4">
 
-      <div className="flex items-start gap-3">
-        <MapPin className={`w-4 h-4 mt-0.5 flex-shrink-0
-          ${selected ? 'text-primary' : 'text-slate-400'}`} />
+          {/* Badge */}
+          <span className="inline-block text-[11px] font-semibold px-2 py-1 bg-[#f0f0f0] text-[#212121] rounded">
+            {address.addressType}
+          </span>
 
-        <div className="flex-1 min-w-0 pr-8">
-          {/* Name + Type + Phone */}
-          <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <span className="font-bold text-slate-900 text-sm">{address.name}</span>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider border
-              ${address.addressType === 'WORK'
-                ? 'bg-blue-50 text-blue-600 border-blue-100'
-                : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
-              {address.addressType}
-            </span>
-            <span className="text-slate-500 text-sm">{address.phoneNumber}</span>
-          </div>
-
-          {/* Full address */}
-          <p className="text-sm text-slate-600 leading-relaxed">
-            {address.addressLine}, {address.locality}
-            {address.landmark && <>, Near {address.landmark}</>},<br />
-            {address.city}, {address.state} —{' '}
-            <span className="font-semibold text-slate-700">{address.pincode}</span>
+          {/* Name + Phone */}
+          <p className="mt-2 text-[14px] font-semibold text-[#212121]">
+            {address.name} &nbsp; {address.phoneNumber}
           </p>
 
-          {/* Edit / Delete — only in non-selectable mode */}
-          {!selectable && (
-            <div className="flex items-center gap-4 mt-3">
-              <button onClick={() => onEdit?.(address)}
-                className="flex items-center gap-1 text-primary text-xs font-semibold hover:underline">
-                <Pencil className="w-3 h-3" /> Edit
-              </button>
+          {/* Address */}
+          <p className="mt-2 text-[13px] text-[#212121] leading-5">
+            {address.addressLine}, {address.locality}, {address.city},{" "}
+          </p>
+            <p className="text-[13px] text-[#212121] leading-5"> {address.state} - <span className="font-semibold">{address.pincode}</span></p>
+        </div>
+
+        {/* RIGHT 3 DOT MENU */}
+        <div className="relative">
+          <button
+            onClick={() => setOpen(prev => !prev)}
+            className="p-2 rounded-full hover:bg-gray-100 transition"
+          >
+            <MoreVertical className="w-4 h-4 text-gray-600" />
+          </button>
+
+          {/* Dropdown */}
+          {open && (
+            <div className="absolute right-0 mt-2 w-28 bg-white border border-[#e0e0e0] shadow-md rounded-sm z-10">
+
               <button
-                onClick={() => { if (window.confirm('Delete this address?')) deleteAddress(address.id) }}
-                disabled={isDeleting}
-                className="flex items-center gap-1 text-red-500 text-xs font-semibold hover:underline disabled:opacity-50">
-                <Trash2 className="w-3 h-3" /> Delete
+                onClick={() => {
+                  onEdit(address)
+                  setOpen(false)
+                }}
+                className="flex items-center gap-2 w-full px-3 py-2 text-sm text-[#212121] hover:bg-gray-50"
+              >
+                <Pencil className="w-3.5 h-3.5" />
+                Edit
               </button>
+
+              <button
+                onClick={() => {
+                  onDelete?.(address.id)
+                  setOpen(false)
+                }}
+                className="flex items-center gap-2 w-full px-3 py-2 text-sm text-red-500 hover:bg-gray-50"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                Delete
+              </button>
+
             </div>
           )}
         </div>
-      </div>
 
-      {/* Deliver Here — shown when selected in checkout */}
-      {selectable && selected && (
-        <div className="mt-4 pl-7">
-          <button
-            onClick={e => { e.stopPropagation(); onSelect?.(address) }}
-            className="bg-primary hover:bg-primary-dark text-white text-sm font-bold
-              px-8 py-2.5 rounded shadow-sm transition-colors">
-            DELIVER HERE
-          </button>
-        </div>
-      )}
+      </div>
     </div>
   )
 }
+
 export default AddressCard

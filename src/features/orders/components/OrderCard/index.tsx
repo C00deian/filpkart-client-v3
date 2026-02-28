@@ -1,67 +1,92 @@
-import { Link } from 'react-router-dom'
-import type { OrderDto } from '@/types/order.types'
-import { formatPrice } from '@/utils/formatPrice'
-import Badge from '@/components/ui/Badge'
-import { ChevronRight, Package } from 'lucide-react'
+import { Link } from "react-router-dom";
+import type { OrderDto } from "@/types/order.types";
+import { formatPrice } from "@/utils/formatPrice";
+import { ChevronRight, Star } from "lucide-react";
 
-interface Props { order: OrderDto }
-
-const STATUS_MAP: Record<string, { variant: 'success' | 'warning' | 'error' | 'info' | 'default', label: string }> = {
-  DELIVERED:   { variant: 'success', label: 'Delivered' },
-  SHIPPED:     { variant: 'info',    label: 'Shipped' },
-  PROCESSING:  { variant: 'warning', label: 'Processing' },
-  CONFIRMED:   { variant: 'info',    label: 'Confirmed' },
-  PENDING:     { variant: 'default', label: 'Pending' },
-  CANCELLED:   { variant: 'error',   label: 'Cancelled' },
-  RETURNED:    { variant: 'default', label: 'Returned' },
+interface Props {
+  order: OrderDto;
 }
 
 const OrderCard = ({ order }: Props) => {
-  const status = STATUS_MAP[order.orderStatus] ?? { variant: 'default' as const, label: order.orderStatus }
+  const item = order.items[0]; // Flipkart style = show first item only
+
+  const formattedDate = new Date(order.orderDate).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 
   return (
-    <div className="bg-white rounded-sm shadow-card hover:shadow-card-hover transition-shadow">
-      <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Package className="w-4 h-4 text-slate-400" />
-          <div>
-            <p className="text-xs text-slate-400">Order #{order.id.slice(-8).toUpperCase()}</p>
-            <p className="text-xs text-slate-400">{new Date(order.orderDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-          </div>
+    <Link
+      to={`/orders/${order.id}`}
+      className="block border border-[#e0e0e0] bg-white rounded-sm hover:shadow-md transition"
+    >
+      <div className="p-4 flex items-center gap-6">
+        {/* Product Image */}
+        <div className="w-[80px] h-[80px] flex-shrink-0  flex items-center justify-center">
+          {item.productImage ? (
+            <img
+              src={item.productImage}
+              alt={item.productName}
+              className="w-full h-full object-contain p-1"
+            />
+          ) : (
+            <span className="text-2xl">📦</span>
+          )}
         </div>
-        <div className="flex items-center gap-3">
-          <Badge label={status.label} variant={status.variant} size="sm" />
-          <Link to={`/orders/${order.id}`} className="text-primary hover:underline">
-            <ChevronRight className="w-4 h-4" />
-          </Link>
+
+        {/* Middle Section */}
+        <div className="flex-1 min-w-0">
+          <p className="text-[14px] text-[#212121] truncate">
+            {item.productName}
+          </p>
+
+          <p className="text-[13px] text-[#878787] mt-1">
+            Qty: {item.quantity}
+          </p>
+
+          <p className="text-[14px] font-medium text-[#212121] mt-2">
+            {formatPrice(item.unitPrice)}
+          </p>
+        </div>
+
+        {/* Right Section */}
+        <div className="text-right min-w-[220px]">
+          {/* Status */}
+          <div className="flex items-center justify-end gap-2">
+            <span
+              className={`w-2 h-2 rounded-full ${
+                order.orderStatus === "DELIVERED"
+                  ? "bg-green-500"
+                  : order.orderStatus === "PENDING"
+                    ? "bg-gray-400"
+                    : "bg-blue-500"
+              }`}
+            />
+
+            <p className="text-[14px] font-medium text-[#212121]">
+              {order.orderStatus === "DELIVERED"
+                ? `Delivered on ${formattedDate}`
+                : order.orderStatus}
+            </p>
+          </div>
+
+          {order.orderStatus === "DELIVERED" && (
+            <>
+              <p className="text-[12px] text-[#878787] mt-1">
+                Your item has been delivered
+              </p>
+
+              <div className="flex items-center justify-end gap-2 text-[#2874f0] mt-2 text-[13px] font-medium">
+                <Star className="w-4 h-4 fill-[#2874f0]" />
+                Rate & Review Product
+              </div>
+            </>
+          )}
         </div>
       </div>
+    </Link>
+  );
+};
 
-      <div className="p-4 space-y-2">
-        {order.items.slice(0, 2).map(item => (
-          <div key={item.productId} className="flex items-center gap-3">
-            <div className="w-12 h-12 flex-shrink-0 bg-slate-50 rounded border border-slate-100 flex items-center justify-center">
-              {item.productImage
-                ? <img src={item.productImage} alt={item.productName} className="w-full h-full object-contain p-1" />
-                : <span>📦</span>
-              }
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm text-slate-700 truncate">{item.productName}</p>
-              <p className="text-xs text-slate-400">Qty: {item.quantity} × {formatPrice(item.unitPrice)}</p>
-            </div>
-          </div>
-        ))}
-        {order.items.length > 2 && (
-          <p className="text-xs text-slate-400">+{order.items.length - 2} more items</p>
-        )}
-      </div>
-
-      <div className="px-4 py-3 bg-slate-50 rounded-b-sm border-t border-slate-100 flex justify-between items-center">
-        <span className="text-sm text-slate-500">Order Total</span>
-        <span className="font-bold text-slate-900">{formatPrice(order.totalPrice)}</span>
-      </div>
-    </div>
-  )
-}
-export default OrderCard
+export default OrderCard;
