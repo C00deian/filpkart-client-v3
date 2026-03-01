@@ -1,9 +1,19 @@
 import { NavLink } from "react-router-dom";
-import { User, Package, Settings, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { MdAccountBalanceWallet } from "react-icons/md";
+import { RiShoppingBag3Fill } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
 
 const AccountSidebar = () => {
   const { user, logout } = useAuth();
+
+  const subLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `block pl-10 pr-4 py-3 text-sm border-b border-slate-100 transition-colors ${
+      isActive
+        ? "text-blue-500 font-medium bg-blue-50/50"
+        : "text-slate-700 hover:text-blue-500 hover:bg-blue-50"
+    }`;
 
   return (
     <aside className="bg-white rounded-sm shadow-card h-fit text-sm">
@@ -15,74 +25,81 @@ const AccountSidebar = () => {
               {user.name[0].toUpperCase()}
             </span>
           ) : (
-            <User className="w-6 h-6 text-primary" />
+            <FaUser className="w-6 h-6 text-primary" />
           )}
         </div>
-
-        <div className="min-w-0">
-          <p className="font-bold text-slate-800 truncate">
+        <div>
+          <p className="text-xs text-slate-500">Hello,</p>
+          <p className="font-bold text-slate-800 text-base leading-tight">
             {user?.name ?? "User"}
           </p>
-          <p className="text-xs text-slate-400 truncate">{user?.email}</p>
         </div>
       </div>
 
-      {/* Nav (Route-based active detection) */}
-      <nav className="p-2 space-y-1">
-        <NavLink
-          to="/account/orders"
-          className={({ isActive }) =>
-            `w-full flex items-center gap-3 px-3 py-2.5 rounded text-sm transition-colors ${
-              isActive
-                ? "bg-primary/10 text-primary font-semibold"
-                : "text-slate-600 hover:bg-slate-50"
-            }`
-          }
-        >
-          <Package className="w-4 h-4" />
+      {/* MY ORDERS */}
+      <NavLink
+        to="/account/orders"
+        className={({ isActive }) =>
+          `flex items-center gap-3 px-4 py-4 border-b border-slate-200 transition-colors ${
+            isActive ? "text-blue-500" : "text-slate-500/80 hover:text-blue-500"
+          }`
+        }
+      >
+        <RiShoppingBag3Fill className="w-5 h-5 text-blue-500" />
+        <span className="font-bold uppercase tracking-wide text-md flex-1">
           My Orders
-          <ChevronRight className="w-3.5 h-3.5 ml-auto" />
-        </NavLink>
+        </span>
+        <ChevronRight className="w-4 h-4 text-slate-400" />
+      </NavLink>
 
-        <NavLink
-          to="/account/profile"
-          className={({ isActive }) =>
-            `w-full flex items-center gap-3 px-3 py-2.5 rounded text-sm transition-colors ${
-              isActive
-                ? "bg-primary/10 text-primary font-semibold"
-                : "text-slate-600 hover:bg-slate-50"
-            }`
-          }
-        >
-          <Settings className="w-4 h-4" />
-          Profile Settings
-          <ChevronRight className="w-3.5 h-3.5 ml-auto" />
+      {/* ACCOUNT SETTINGS */}
+      <div className="border-b border-slate-200">
+        <div className="flex items-center gap-3 px-4 py-4">
+          <FaUser className="w-5 h-5 text-blue-500" />
+          <span className="font-bold uppercase tracking-wide text-md text-slate-500/80 ">
+            Account Settings
+          </span>
+        </div>
+        <NavLink to="/account/profile" className={subLinkClass} >
+          Profile Information
         </NavLink>
-
-        <NavLink
-          to="/account/addresses"
-          className={({ isActive }) =>
-            `w-full flex items-center gap-3 px-3 py-2.5 rounded text-sm transition-colors ${
-              isActive
-                ? "bg-primary/10 text-primary font-semibold"
-                : "text-slate-600 hover:bg-slate-50"
-            }`
-          }
-        >
+        <NavLink to="/account/addresses" className={subLinkClass}>
           Manage Addresses
-          <ChevronRight className="w-3.5 h-3.5 ml-auto" />
         </NavLink>
-      </nav>
+        <NavLink to="/account/pan" className={subLinkClass}>
+          PAN Card Information
+        </NavLink>
+      </div>
+
+      {/* PAYMENTS */}
+      <div className="border-b border-slate-200">
+        <div className="flex items-center gap-3 px-4 py-4">
+          <MdAccountBalanceWallet className="w-5 h-5 text-blue-500" />
+          <span className="font-bold uppercase tracking-wide text-md text-slate-500/80 ">
+            Payments
+          </span>
+        </div>
+        <NavLink to="/account/gift-cards" className={subLinkClass}>
+          <span className="flex items-center justify-between pr-0">
+            Gift Cards
+            <span className="text-green-600 font-medium">₹0</span>
+          </span>
+        </NavLink>
+        <NavLink to="/account/upi" className={subLinkClass}>
+          Saved UPI
+        </NavLink>
+        <NavLink to="/account/cards" className={subLinkClass}>
+          Saved Cards
+        </NavLink>
+      </div>
 
       {/* Logout */}
-      <div className="p-2 border-t border-slate-100">
-        <button
-          onClick={logout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded text-sm text-red-500 hover:bg-red-50 transition-colors"
-        >
-          Logout
-        </button>
-      </div>
+      <button
+        onClick={logout}
+        className="w-full text-left px-4 py-4 text-sm font-bold uppercase tracking-wide text-slate-600 hover:text-blue-500 transition-colors"
+      >
+        Logout
+      </button>
     </aside>
   );
 };

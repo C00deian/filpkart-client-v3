@@ -58,7 +58,7 @@ const AppRouter = () => (
         <Route path={ROUTES.ORDERS} element={<OrdersPage />} />
         <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
         <Route path={ROUTES.ACCOUNT} element={<AccountLayout />}>
-          <Route index element={<OverviewTab />} />
+          <Route index element={<ProfileTab />} />
           <Route path="orders" element={<OrdersTab />} />
           <Route path="addresses" element={<AddressTab />} />
           <Route path="profile" element={<ProfileTab />} />

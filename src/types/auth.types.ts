@@ -19,4 +19,6 @@ export interface User {
   name?: string | null
   email?: string | null
   role: 'USER' | 'ADMIN' | 'SELLER' | string
+  gender?: string | null
+  phoneNumber?: string | null
 }

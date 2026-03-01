@@ -24,9 +24,9 @@ const AddressList = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between p-2">
         <h2 className="font-bold text-slate-800 flex items-center">
-          <MapPin className="w-4 h-4 text-primary" /> Manage Addresses
+          <MapPin className="w-4 h-4 text-primary mr-2" /> Manage Addresses
         </h2>
       </div>
 
