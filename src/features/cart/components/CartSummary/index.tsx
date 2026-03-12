@@ -3,9 +3,13 @@ import { formatPrice } from '@/utils/formatPrice'
 import { ROUTES } from '@/routes/routePaths'
 import type { CartDto } from '@/types/order.types'
 
-interface Props { cart: CartDto }
+interface Props {
+  cart: CartDto
+  /** Pass true on the checkout page to hide the PLACE ORDER button */
+  hideAction?: boolean
+}
 
-const CartSummary = ({ cart }: Props) => {
+const CartSummary = ({ cart, hideAction = false }: Props) => {
   const navigate = useNavigate()
   const savings = cart.items.reduce((sum, i) => sum + (i.unitPrice * i.quantity - i.totalPrice), 0)
 
@@ -42,10 +46,13 @@ const CartSummary = ({ cart }: Props) => {
         )}
       </div>
 
-      <button onClick={() => navigate(ROUTES.CHECKOUT)}
-        className="mt-5 w-full py-3 bg-[#fb641b] hover:bg-[#e85d10] text-white font-bold rounded shadow-sm transition-colors">
-        PLACE ORDER
-      </button>
+      {!hideAction && (
+        <button
+          onClick={() => navigate(ROUTES.CHECKOUT)}
+          className="mt-5 w-full py-3 bg-[#fb641b] hover:bg-[#e85d10] text-white font-bold rounded shadow-sm transition-colors">
+          PLACE ORDER
+        </button>
+      )}
     </div>
   )
 }
