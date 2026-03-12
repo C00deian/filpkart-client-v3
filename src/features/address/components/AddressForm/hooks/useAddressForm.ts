@@ -6,7 +6,7 @@ import type { AddressDto } from '@/types/address.types'
 
 interface Options {
   editAddress?: AddressDto | null
-  onSuccess?:   () => void
+  onSuccess?: () => void
 }
 
 export const useAddressForm = ({ editAddress, onSuccess }: Options) => {
@@ -34,13 +34,17 @@ export const useAddressForm = ({ editAddress, onSuccess }: Options) => {
         },
   })
 
-  const onSubmit: SubmitHandler<AddressFormValues> = (data) => {
-    if (editAddress) {
-      updateAddress(editAddress.id, data)
-    } else {
-      addAddress(data)
+  const onSubmit: SubmitHandler<AddressFormValues> = async (data) => {
+    try {
+      if (editAddress) {
+        await updateAddress(editAddress.id, data)
+      } else {
+        await addAddress(data)
+      }
+      onSuccess?.()
+    } catch {
+      // Toast is already handled by mutation onError; keep form open for retry.
     }
-    onSuccess?.()
   }
 
   return {

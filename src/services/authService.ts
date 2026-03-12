@@ -5,6 +5,7 @@ import type {
   LoginRequest,
   RegisterRequest,
 } from "@/types/auth.types";
+import type { ApiResponse } from "@/types/api.types";
 
 export const authService = {
   login: async (credentials: LoginRequest): Promise<AuthResponse> => {
@@ -19,7 +20,7 @@ export const authService = {
     await api.post("/auth/logout");
   },
   getMe: async (): Promise<User> => {
-    const res = await api.get<User>("/auth/me");
-    return res.data;
+    const res = await api.get<ApiResponse<User>>("/auth/me");
+    return res.data.data;
   },
 };

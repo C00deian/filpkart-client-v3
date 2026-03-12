@@ -67,7 +67,7 @@ const AddressCard = ({
               {address.addressLine}, {address.locality}, {address.city},
             </p>
             <p className="text-[13px] text-[#212121] leading-5">
-              {address.state} – <span className="font-semibold">{address.pincode}</span>
+              {address.state} - <span className="font-semibold">{address.pincode}</span>
             </p>
 
             {/* DELIVER HERE — only visible on the selected card */}

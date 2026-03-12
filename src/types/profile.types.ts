@@ -15,4 +15,5 @@ export interface UpdateProfileRequest {
   email?: string;
   phoneNumber?: string;
   name?: string;
+  gender?: string;
 }

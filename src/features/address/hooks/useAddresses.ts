@@ -10,7 +10,13 @@ export const useAddresses = () => {
   const qc = useQueryClient()
   const { user } = useAuth()
 
-  const { data: addresses = [], isLoading } = useQuery({
+  const {
+    data: addresses = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ADDRESS_KEY,
     queryFn: addressService.getAddresses,
     enabled: !!user,
@@ -48,10 +54,13 @@ export const useAddresses = () => {
   return {
     addresses,
     isLoading,
-    addAddress:    (payload: AddressRequest)              => addAddress.mutate(payload),
-    updateAddress: (id: number, payload: AddressRequest) => updateAddress.mutate({ id, payload }),
-    deleteAddress: (id: number)                          => deleteAddress.mutate(id),
-    isAdding:   addAddress.isPending,
+    isError,
+    error,
+    refetch,
+    addAddress: (payload: AddressRequest) => addAddress.mutateAsync(payload),
+    updateAddress: (id: number, payload: AddressRequest) => updateAddress.mutateAsync({ id, payload }),
+    deleteAddress: (id: number) => deleteAddress.mutateAsync(id),
+    isAdding: addAddress.isPending,
     isUpdating: updateAddress.isPending,
     isDeleting: deleteAddress.isPending,
   }

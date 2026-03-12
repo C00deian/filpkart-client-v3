@@ -10,12 +10,11 @@ const ProductDetailPage = lazy(() => import("@/pages/ProductDetailPage"));
 const CartPage = lazy(() => import("@/pages/CartPage"));
 const CheckoutPage = lazy(() => import("@/pages/CheckoutPage"));
 const OrdersPage = lazy(() => import("@/pages/OrdersPage"));
+const OrderDetailPage = lazy(() => import("@/pages/OrderDetailPage"));
 const OrderConfirmationPage = lazy(
   () => import("@/pages/OrderConfirmationPage"),
 );
-// const AccountPage          = lazy(() => import('@/pages/AccountPage'))
 const AccountLayout = lazy(() => import("@/features/account"));
-const OverviewTab = lazy(() => import("@/features/account/tabs/OverviewTab"));
 const OrdersTab = lazy(() => import("@/features/account/tabs/OrdersTab"));
 const AddressTab = lazy(() => import("@/features/account/tabs/AddressTab"));
 const ProfileTab = lazy(() => import("@/features/account/tabs/ProfileTab"));
@@ -56,6 +55,7 @@ const AppRouter = () => (
         <Route path={ROUTES.CART} element={<CartPage />} />
         <Route path={ROUTES.CHECKOUT} element={<CheckoutPage />} />
         <Route path={ROUTES.ORDERS} element={<OrdersPage />} />
+        <Route path={ROUTES.ORDER_DETAIL} element={<OrderDetailPage />} />
         <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
         <Route path={ROUTES.ACCOUNT} element={<AccountLayout />}>
           <Route index element={<ProfileTab />} />

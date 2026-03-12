@@ -6,7 +6,7 @@ import {
   LogOut,
   Package,
   Heart,
-  MapPin,
+  LayoutDashboard,
 } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ROUTES } from "@/routes/routePaths";
@@ -42,18 +42,20 @@ const UserMenu = () => {
     );
   }
 
-  /* ✅ MENU CONFIG */
-  const userMenuItems = [
+  /* User always sees these items */
+  const baseMenuItems = [
     { label: "My Profile", icon: User, to: ROUTES.ACCOUNT },
     { label: "My Orders", icon: Package, to: ROUTES.ORDERS },
     { label: "Wishlist", icon: Heart, to: ROUTES.WISHLIST },
   ];
 
-  const adminMenuItems = [
-    { label: "Admin Dashboard", icon: MapPin, to: ROUTES.ADMIN.ROOT },
-  ];
-
-  const menuItems = isAdmin ? adminMenuItems : userMenuItems;
+  /* Admin gets an extra Dashboard entry prepended */
+  const menuItems = isAdmin
+    ? [
+        { label: "Admin Dashboard", icon: LayoutDashboard, to: ROUTES.ADMIN.ROOT },
+        ...baseMenuItems,
+      ]
+    : baseMenuItems;
 
   return (
     <div
@@ -74,7 +76,7 @@ const UserMenu = () => {
 
       {open && (
         <>
-          {/* Transparent bridge to prevent menu from closing when moving mouse from button to menu */}
+          {/* Transparent bridge */}
           <div className="absolute top-10 left-0 w-full h-4 z-[109]" />
 
           <div className="absolute right-0 top-[52px] w-64 bg-white rounded-xl shadow-2xl border border-slate-100 py-2 z-[110] animate-in fade-in zoom-in-95 duration-200 origin-top-right">
@@ -82,10 +84,14 @@ const UserMenu = () => {
               <p className="text-[15px] font-bold text-slate-900 leading-tight">
                 Your Account
               </p>
+              {isAdmin && (
+                <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded bg-primary/10 text-primary">
+                  Admin
+                </span>
+              )}
             </div>
 
             <div className="py-1">
-              {/* ✅ MAPPED MENU */}
               {menuItems.map(({ label, icon: Icon, to }) => (
                 <Link
                   key={label}
@@ -99,7 +105,7 @@ const UserMenu = () => {
               ))}
             </div>
 
-            {/* ✅ Logout */}
+            {/* Logout */}
             <div className="border-t border-slate-50 mt-1 pt-1">
               <button
                 onClick={handleLogout}
