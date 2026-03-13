@@ -4,9 +4,11 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
+import { useCurrentUserDisplayName } from "@/features/account/hooks/useCurrentUserDisplayName";
 
 const AccountSidebar = () => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
+  const { displayName } = useCurrentUserDisplayName();
 
   const subLinkClass = ({ isActive }: { isActive: boolean }) =>
     `block pl-10 pr-4 py-3 text-sm border-b border-slate-100 transition-colors ${
@@ -20,9 +22,9 @@ const AccountSidebar = () => {
       {/* User info (your original style) */}
       <div className="p-4 flex items-center gap-3 border-b border-slate-100">
         <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-          {user?.name ? (
+          {displayName ? (
             <span className="text-primary font-bold text-xl">
-              {user.name[0].toUpperCase()}
+              {displayName[0].toUpperCase()}
             </span>
           ) : (
             <FaUser className="w-6 h-6 text-primary" />
@@ -31,7 +33,7 @@ const AccountSidebar = () => {
         <div>
           <p className="text-xs text-slate-500">Hello,</p>
           <p className="font-bold text-slate-800 text-base leading-tight">
-            {user?.name ?? "User"}
+            {displayName || "User"}
           </p>
         </div>
       </div>

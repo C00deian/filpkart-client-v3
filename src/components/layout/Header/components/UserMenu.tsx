@@ -10,9 +10,11 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ROUTES } from "@/routes/routePaths";
+import { useCurrentUserDisplayName } from "@/features/account/hooks/useCurrentUserDisplayName";
 
 const UserMenu = () => {
   const { user, logout, isAdmin } = useAuth();
+  const { displayName } = useCurrentUserDisplayName();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -68,7 +70,7 @@ const UserMenu = () => {
         <div className="p-0.5 rounded-full group-hover:bg-primary group-hover:text-white transition-colors">
           <User className="w-5 h-5" />
         </div>
-        <span>{user.name ?? "Account"}</span>
+        <span>{displayName}</span>
         <ChevronDown
           className={`w-3.5 h-3.5 transition-transform duration-300 ${open ? "rotate-180 text-primary" : "text-slate-400"}`}
         />

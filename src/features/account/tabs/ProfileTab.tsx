@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import { useProfile } from '@/features/account/hooks/useProfile'
+import { useProfile } from "@/features/account/hooks/useProfile";
+import { useCurrentUserDisplayName } from "@/features/account/hooks/useCurrentUserDisplayName";
 
 interface ProfileFormValues {
   name: string;
@@ -14,13 +15,14 @@ interface ProfileFormValues {
 const ProfileTab = () => {
   const { profile, updateProfile, deleteAccount, isUpdating, isDeleting, isLoading } =
     useProfile();
+  const { displayName } = useCurrentUserDisplayName();
 
   const [isEdit, setIsEdit] = useState(false);
 
   const { register, handleSubmit, formState: { errors, isDirty } } =
     useForm<ProfileFormValues>({
       values: {
-        name: profile?.name || "",
+        name: profile?.name || displayName || "",
         gender: profile?.gender || "",
         email: profile?.email || "",
         phoneNumber: profile?.phoneNumber || "",
@@ -75,7 +77,7 @@ const ProfileTab = () => {
           <div className="space-y-4 text-sm">
             <div className="flex justify-between border-b pb-2">
               <span className="text-gray-500">Name</span>
-              <span className="font-medium">{profile.name || "—"}</span>
+              <span className="font-medium">{displayName || profile.name || "-"}</span>
             </div>
 
             <div className="flex justify-between border-b pb-2">
