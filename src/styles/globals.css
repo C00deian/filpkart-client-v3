@@ -8,10 +8,15 @@
   }
   body {
     font-family:
+      "Varela Round",
       "Roboto",
       -apple-system,
       BlinkMacSystemFont,
       sans-serif;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.1px;
     color: #212121;
   }
 }

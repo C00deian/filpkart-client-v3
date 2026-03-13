@@ -3,6 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        varela: ['Varela Round', 'sans-serif'],
+      },
        keyframes: {
       slideDown: {
         '0%': { opacity: '0', transform: 'translateY(-8px)' },
