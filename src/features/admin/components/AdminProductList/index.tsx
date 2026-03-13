@@ -1,94 +1,126 @@
 import { useState } from 'react'
-import { Plus, Search, Package } from 'lucide-react'
+import { Plus, Package, Search } from 'lucide-react'
 import { useAdminProducts } from '../../hooks/useAdminProducts'
 import { useCategories } from '@/features/products/hooks/useCategories'
-import ProductTableRow from './components/ProductTableRow'
+import ProductAdminCard from './components/ProductAdminCard'
 import AddProductForm from '../AddProductForm'
 import { Skeleton } from '@/components/ui/Skeleton'
 import type { Product } from '@/types/product.types'
 
 const AdminProductList = () => {
   const {
-    products, isLoading,
+    products, isLoading, isDeleting,
     search, setSearch,
     categoryFilter, setCategoryFilter,
     deleteProduct, toggleStock,
   } = useAdminProducts()
   const { data: categories = [] } = useCategories()
-  const [showAddForm, setShowAddForm] = useState(false)
+  const [showForm, setShowForm] = useState(false)
   const [editProduct, setEditProduct] = useState<Product | null>(null)
+  const [deletingId, setDeletingId] = useState<number | null>(null)
+
+  const handleEdit = (product: Product) => {
+    setEditProduct(product)
+    setShowForm(true)
+  }
+
+  const handleDelete = async (id: number) => {
+    try {
+      setDeletingId(id)
+      await deleteProduct(id)
+      if (editProduct?.id === id) {
+        setEditProduct(null)
+        setShowForm(false)
+      }
+    } finally {
+      setDeletingId(null)
+    }
+  }
+
+  const handleClose = () => {
+    setEditProduct(null)
+    setShowForm(false)
+  }
 
   return (
-    <div className="p-6 space-y-5">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-            <Package className="w-6 h-6 text-primary" /> Products
-          </h1>
-          <p className="text-slate-400 text-sm mt-0.5">{products.length} products</p>
-        </div>
-        <button onClick={() => setShowAddForm(true)}
-          className="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-4 py-2.5 rounded-lg shadow-sm transition-colors text-sm">
-          <Plus className="w-4 h-4" /> Add Product
-        </button>
+    <div className="space-y-4">
+      {/* Title row */}
+      <div className="flex items-center justify-between p-2">
+        <h2 className="font-bold text-slate-800 flex items-center">
+          <Package className="w-4 h-4 text-primary mr-2" /> Manage Products
+        </h2>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-4 flex gap-3 flex-wrap">
+      <div className="flex gap-3 flex-wrap">
         <div className="relative flex-1 min-w-48">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input value={search} onChange={e => setSearch(e.target.value)}
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
             placeholder="Search by name or brand..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-lg outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
+            className="w-full pl-9 pr-3 py-2 text-sm border border-[#e0e0e0] rounded outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition bg-white"
+          />
         </div>
-        <select value={categoryFilter} onChange={e => setCategoryFilter(e.target.value)}
-          className="border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-primary transition bg-white text-slate-700">
+        <select
+          value={categoryFilter}
+          onChange={e => setCategoryFilter(e.target.value)}
+          className="border border-[#e0e0e0] rounded px-3 py-2 text-sm outline-none focus:border-primary transition bg-white text-slate-700"
+        >
           <option value="all">All Categories</option>
           {categories.map(cat => <option key={cat.id} value={cat.slug}>{cat.name}</option>)}
         </select>
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-        {isLoading ? (
-          <div className="p-4 space-y-3">
-            {Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-16 w-full rounded-lg" />)}
-          </div>
-        ) : products.length === 0 ? (
-          <div className="flex flex-col items-center py-16 text-slate-400 gap-3">
-            <Package className="w-12 h-12" />
-            <p className="font-medium">No products found</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-100">
-                  {['Product', 'Category', 'Price', 'Status', 'Actions'].map(h => (
-                    <th key={h} className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {products.map(p => (
-                  <ProductTableRow
-                    key={p.id}
-                    product={p}
-                    onDelete={deleteProduct}
-                    onToggleStock={toggleStock}
-                    onEdit={setEditProduct}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+      {/* Add Product inline toggle button — hidden while form is open */}
+      {!showForm && (
+        <div className="flex items-center w-full py-2 text-primary text-xs border border-[#e0e0e0] bg-white font-semibold cursor-pointer gap-2">
+          <button onClick={() => setShowForm(true)}>
+            <div className="p-2 flex items-center gap-2 uppercase">
+              <Plus className="w-4 h-4" /> Add New Product
+            </div>
+          </button>
+        </div>
+      )}
 
-      {showAddForm && <AddProductForm onClose={() => setShowAddForm(false)} />}
+      {/* Inline form with slide-down animation */}
+      {showForm && (
+        <div className="animate-slideDown">
+          <AddProductForm onClose={handleClose} />
+        </div>
+      )}
+
+      {/* Product list */}
+      {isLoading ? (
+        <div className="space-y-3">
+          {[1, 2, 3].map(i => <Skeleton key={i} className="h-28 rounded-lg" />)}
+        </div>
+      ) : products.length === 0 ? (
+        <div className="bg-white border border-slate-200 rounded-sm p-10 text-center">
+          <Package className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+          <p className="text-sm font-semibold text-slate-700">No products found</p>
+          <p className="text-xs text-slate-500 mt-1">Add a new product to get started.</p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {products.map(p => (
+            <div
+              key={p.id}
+              className={deletingId === p.id ? 'opacity-60 pointer-events-none' : ''}
+            >
+              <ProductAdminCard
+                product={p}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                onToggleStock={toggleStock}
+              />
+              {deletingId === p.id && isDeleting && (
+                <p className="text-xs text-slate-500 mt-1 px-1">Removing product...</p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

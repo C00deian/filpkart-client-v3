@@ -9,7 +9,11 @@ const COLORS = [
   { color: 'Green',  colorCode: '#22C55E' },
   { color: 'Yellow', colorCode: '#EAB308' },
   { color: 'Gray',   colorCode: '#9CA3AF' },
-  { color: 'Pink',   colorCode: '#EC4899' },
+    {color: "Deep Blue", colorCode: "#003049"},
+    {color: "Cosmic Orange", colorCode: "#F77F00"},
+    {color: "Silver", colorCode: "#F3F4F4"},
+    {color: "Navy", colorCode: "#000080"},
+
 ]
 
 interface Props {
