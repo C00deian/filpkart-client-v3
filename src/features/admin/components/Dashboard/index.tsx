@@ -5,6 +5,7 @@ import { formatPrice } from '@/utils/formatPrice'
 import StatCard from './components/StatCard'
 import RecentOrders from './components/RecentOrders'
 import { Skeleton } from '@/components/ui/Skeleton'
+import Navbar from "@/components/Navbar/Navbar.tsx";
 
 const Dashboard = () => {
   const { orders, stats: orderStats, isLoading: ordersLoading } = useAdminOrders()
@@ -13,7 +14,6 @@ const Dashboard = () => {
 
   return (
     <div className="p-6 space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
           <LayoutDashboard className="w-6 h-6 text-primary" /> Dashboard

@@ -44,20 +44,21 @@ const UserMenu = () => {
     );
   }
 
-  /* User always sees these items */
-  const baseMenuItems = [
-    { label: "My Profile", icon: User, to: ROUTES.ACCOUNT },
+  /* Customer-only actions */
+  const customerMenuItems = [
     { label: "My Orders", icon: Package, to: ROUTES.ORDERS },
     { label: "Wishlist", icon: Heart, to: ROUTES.WISHLIST },
   ];
 
-  /* Admin gets an extra Dashboard entry prepended */
   const menuItems = isAdmin
     ? [
         { label: "Admin Dashboard", icon: LayoutDashboard, to: ROUTES.ADMIN.ROOT },
-        ...baseMenuItems,
+        { label: "My Profile", icon: User, to: ROUTES.ACCOUNT },
       ]
-    : baseMenuItems;
+    : [
+        { label: "My Profile", icon: User, to: ROUTES.ACCOUNT },
+        ...customerMenuItems,
+      ];
 
   return (
     <div

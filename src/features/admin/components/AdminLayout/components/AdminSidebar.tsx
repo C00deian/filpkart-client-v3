@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import {
   LayoutDashboard, Package, ShoppingBag, Tag, LogOut, ChevronRight
 } from 'lucide-react'
@@ -21,7 +21,9 @@ const AdminSidebar = () => {
       <div className="px-6 py-5 border-b border-slate-800">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-            <span className="text-white font-bold text-sm">F</span>
+            <Link to={ROUTES.HOME}>
+              <span className="text-white font-bold text-sm">F</span>
+            </Link>
           </div>
           <div>
             <p className="text-white font-bold text-sm">Flipkart</p>

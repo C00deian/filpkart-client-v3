@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
+import {ShoppingCart, Menu, X, ChevronDown, MapPin} from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useCart } from "@/features/cart/hooks/useCart";
@@ -9,6 +9,9 @@ import SearchBar from "../layout/Header/components/SearchBar";
 import UserMenu from "../layout/Header/components/UserMenu";
 import MoreInfo from "./MoreInfo";
 
+import logo from "@/assets/icons/logo.png";
+import logoName from "@/assets/icons/logoname.png";
+
 const Navbar = () => {
   const { isAdmin } = useAuth();
   const { itemCount } = useCart();
@@ -17,6 +20,25 @@ const Navbar = () => {
   return (
     <header className="bg-white sticky top-0 z-[100] border-b border-black/20">
       <div className="max-w-[1248px] mx-auto px-4 md:px-6 h-16 flex items-center gap-8">
+        <Link
+            to={ROUTES.HOME}
+            className="group transition-transform hover:scale-[1.02] active:scale-[0.98]"
+        >
+          <div className="flex items-center">
+            <div className="bg-[#ffe51f] flex items-center px-6 md:px-14 py-2.5 rounded-xl gap-2.5 shadow-sm group-hover:shadow-md transition-shadow">
+              <img
+                  src={logo}
+                  alt="Flipkart Logo"
+                  className="w-5 md:w-6 object-contain"
+              />
+              <img
+                  src={logoName}
+                  alt="Flipkart"
+                  className="w-10 md:w-12 object-contain"
+              />
+            </div>
+          </div>
+        </Link>
         {/* Search */}
         <SearchBar />
 

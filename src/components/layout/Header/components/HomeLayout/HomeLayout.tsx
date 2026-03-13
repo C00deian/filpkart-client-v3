@@ -1,6 +1,6 @@
-import HeaderTop from "@/components/layout/Header/components/HomeLayout/HeaderTop";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/Navbar/Navbar";
+import React from "react";
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen flex flex-col bg-bg-light">
