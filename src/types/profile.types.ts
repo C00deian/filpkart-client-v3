@@ -1,19 +1,12 @@
-export interface ProfileDto {
-  id: number;
-  userId: string;
-  name: string;
-  gender: string;
-  email: string;
-  phoneNumber: string;
+/** @deprecated Use UserProfile from user.types.ts instead */
+export type ProfileDto = import('./user.types').UserProfile;
+
+export interface UpdateProfileRequest {
+  name?: string;
+  email?: string;
+  phoneNumber?: string;
+  gender?: 'MALE' | 'FEMALE' | 'OTHER' | string;
   bio?: string;
   dateOfBirth?: string;
   avatarUrl?: string;
-  loyaltyPoints?: number;
-}
-
-export interface UpdateProfileRequest {
-  email?: string;
-  phoneNumber?: string;
-  name?: string;
-  gender?: string;
 }

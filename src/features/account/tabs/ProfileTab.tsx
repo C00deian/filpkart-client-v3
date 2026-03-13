@@ -12,7 +12,7 @@ interface ProfileFormValues {
 }
 
 const ProfileTab = () => {
-  const { profile, updateProfile, deleteAccount, isUpdating, isDeleting } =
+  const { profile, updateProfile, deleteAccount, isUpdating, isDeleting, isLoading } =
     useProfile();
 
   const [isEdit, setIsEdit] = useState(false);
@@ -26,6 +26,19 @@ const ProfileTab = () => {
         phoneNumber: profile?.phoneNumber || "",
       },
     });
+
+  if (isLoading) {
+    return (
+      <div className="bg-white border border-slate-200 rounded-md shadow-sm p-6">
+        <div className="animate-pulse space-y-4">
+          <div className="h-4 bg-gray-200 rounded w-1/3" />
+          <div className="h-4 bg-gray-200 rounded w-1/2" />
+          <div className="h-4 bg-gray-200 rounded w-2/3" />
+          <div className="h-4 bg-gray-200 rounded w-1/2" />
+        </div>
+      </div>
+    );
+  }
 
   if (!profile) return null;
 
@@ -62,22 +75,24 @@ const ProfileTab = () => {
           <div className="space-y-4 text-sm">
             <div className="flex justify-between border-b pb-2">
               <span className="text-gray-500">Name</span>
-              <span className="font-medium">{profile.name}</span>
+              <span className="font-medium">{profile.name || "—"}</span>
             </div>
 
             <div className="flex justify-between border-b pb-2">
               <span className="text-gray-500">Gender</span>
-              <span className="font-medium">{profile.gender}</span>
+              <span className="font-medium capitalize">
+                {profile.gender ? profile.gender.toLowerCase() : "—"}
+              </span>
             </div>
 
             <div className="flex justify-between border-b pb-2">
               <span className="text-gray-500">Email</span>
-              <span className="font-medium">{profile.email}</span>
+              <span className="font-medium">{profile.email || "—"}</span>
             </div>
 
             <div className="flex justify-between">
               <span className="text-gray-500">Mobile</span>
-              <span className="font-medium">{profile.phoneNumber}</span>
+              <span className="font-medium">{profile.phoneNumber || "—"}</span>
             </div>
 
             {/* Delete Section */}
@@ -102,8 +117,22 @@ const ProfileTab = () => {
         ) : (
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input {...register("name")} label="Full Name" disabled />
-              <Input {...register("gender")} label="Gender" disabled />
+              <Input
+                {...register("name")}
+                label="Full Name"
+              />
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-medium text-gray-600">Gender</label>
+                <select
+                  {...register("gender")}
+                  className="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                >
+                  <option value="">Select gender</option>
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                  <option value="OTHER">Other</option>
+                </select>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -148,3 +177,4 @@ const ProfileTab = () => {
 };
 
 export default ProfileTab;
+

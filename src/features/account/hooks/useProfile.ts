@@ -1,28 +1,27 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { profileService } from "@/services/profileService";
+import { userService } from "@/services/userService";
 import type { UpdateProfileRequest } from "@/types/profile.types";
 import { toast } from "react-toastify";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
 export const PROFILE_KEY = ["profile"];
 
-
 export const useProfile = () => {
   const qc = useQueryClient();
   const { user, logout } = useAuth();
 
-  // 🔥 Fetch Profile
+  // Fetch Profile via GET /users/profile
   const { data: profile, isLoading } = useQuery({
     queryKey: PROFILE_KEY,
-    queryFn: profileService.getProfile,
+    queryFn: userService.getProfile,
     enabled: !!user,
     staleTime: 1000 * 60 * 5,
   });
 
-  // 🔥 Update Profile
+  // Update Profile via PUT /users/profile
   const updateProfile = useMutation({
     mutationFn: (payload: UpdateProfileRequest) =>
-      profileService.updateProfile(payload),
+      userService.updateProfile(payload),
 
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: PROFILE_KEY });
@@ -34,13 +33,13 @@ export const useProfile = () => {
     },
   });
 
-  // 🔥 Delete Account
+  // Delete Account via DELETE /users
   const deleteAccount = useMutation({
-    mutationFn: profileService.deleteAccount,
+    mutationFn: userService.deleteAccount,
 
     onSuccess: () => {
-      qc.clear(); // clear all react-query cache
-      logout();   // clear auth state + cookies
+      qc.clear();
+      logout();
       toast.success("Account deleted successfully");
       window.location.href = "/";
     },
@@ -63,3 +62,4 @@ export const useProfile = () => {
     isDeleting: deleteAccount.isPending,
   };
 };
+

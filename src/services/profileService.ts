@@ -1,20 +1,9 @@
-import api from "./api";
-import type { UpdateProfileRequest, ProfileDto } from "../types/profile.types"
+/**
+ * @deprecated Use userService from ./userService instead.
+ * profileService is kept only for backward-compat references.
+ * - getProfile  → userService.getProfile  (GET /users/profile)
+ * - updateProfile → userService.updateProfile (PUT /users/profile)
+ * - deleteAccount → userService.deleteAccount (DELETE /users)
+ */
+export { userService as profileService } from './userService'
 
-export const profileService = {
-  getProfile: async (): Promise<ProfileDto> => {
-    const { data } = await api.get("/auth/me");
-    return data;
-  },
-
-  updateProfile: async (
-    payload: UpdateProfileRequest
-  ): Promise<ProfileDto> => {
-    const { data } = await api.put("/users/profile", payload);
-    return data;
-  },
-
-  deleteAccount: async (): Promise<void> => {
-    await api.delete("/users");
-  },
-};
