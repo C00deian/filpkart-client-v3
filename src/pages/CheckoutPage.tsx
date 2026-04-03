@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'
-import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
+import HomeLayout from '@/app/layouts/HomeLayout'
 import CartSummary from '@/features/cart/components/CartSummary'
 import AddressCard from '@/features/address/components/AddressCard'
 import AddressForm from '@/features/address/components/AddressForm'
 import { useCart } from '@/features/cart/hooks/useCart'
 import { useAddresses } from '@/features/address/hooks/useAddresses'
-import { orderService } from '@/services/orderService'
+import { orderService } from '@/features/orders/services/orderService'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Plus, CheckCircle, MapPin, ShoppingBag } from 'lucide-react'
-import type { AddressDto } from '@/types/address.types'
+import type { AddressDto } from '@/features/address/types/address.types'
 import { Skeleton } from '@/components/ui/Skeleton'
 
 // Steps: 0=Login(done), 1=Address, 2=Order Summary, 3=Payment

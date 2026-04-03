@@ -1,10 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import { useAuth } from '@/features/auth/hooks/useAuth'
+import { useAuthValue } from '@/features/auth/hooks/useAuthValue'
+import PageLoader from '@/components/ui/Loader'
 import { ROUTES } from './routePaths'
 
 const PrivateRoute = () => {
-  const { user, isLoading } = useAuth()
-  if (isLoading) return <div className="flex h-screen items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" /></div>
+  const { user, isLoading } = useAuthValue()
+  if (isLoading) return <PageLoader spinnerClassName="border-blue-600" />
   return user ? <Outlet /> : <Navigate to={ROUTES.LOGIN} replace />
 }
 

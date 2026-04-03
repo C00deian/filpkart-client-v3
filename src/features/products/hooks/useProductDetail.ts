@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { productService } from '@/services/productService'
+import { QUERY_TIMES } from '@/config/constants'
+import { productService } from '@/features/products/services/productService'
 
 export const useProductDetail = (id: number) =>
   useQuery({
     queryKey: ['product', id],
     queryFn: () => productService.getProductById(id),
-    staleTime: 1000 * 60 * 10,
+    staleTime: QUERY_TIMES.LONG,
     enabled: !!id,
   })

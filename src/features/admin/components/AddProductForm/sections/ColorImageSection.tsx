@@ -1,5 +1,5 @@
 import { X, Upload } from 'lucide-react'
-import type { ImageType } from '@/types/product.types'
+import type { ImageType } from '@/features/products/types/product.types'
 
 const COLORS = [
   { color: 'Black',  colorCode: '#000000' },

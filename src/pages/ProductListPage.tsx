@@ -5,7 +5,7 @@ import ProductSort from '@/features/products/components/ProductSort'
 import ProductCard from '@/components/shared/ProductCard'
 import { ProductCardSkeleton } from '@/components/ui/Skeleton'
 import { Package } from 'lucide-react'
-import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
+import HomeLayout from '@/app/layouts/HomeLayout'
 
 const ProductListPage = () => {
   const [searchParams] = useSearchParams()

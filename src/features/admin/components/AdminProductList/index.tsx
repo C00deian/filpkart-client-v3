@@ -5,7 +5,7 @@ import { useCategories } from '@/features/products/hooks/useCategories'
 import ProductAdminCard from './components/ProductAdminCard'
 import AddProductForm from '../AddProductForm'
 import { Skeleton } from '@/components/ui/Skeleton'
-import type { Product } from '@/types/product.types'
+import type { Product } from '@/features/products/types/product.types'
 
 const AdminProductList = () => {
   const {

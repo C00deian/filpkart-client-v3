@@ -1,5 +1,5 @@
 import OrderConfirmation from '@/features/orders/components/OrderConfirmation'
-import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
+import HomeLayout from '@/app/layouts/HomeLayout'
 
 const OrderConfirmationPage = () => (
   <HomeLayout>

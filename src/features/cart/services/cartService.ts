@@ -1,37 +1,33 @@
-import api from "./api";
+import apiClient from "@/services/apiClient";
 import type {
   CartDto,
   CartItemDto,
   AddToCartRequest,
-} from "@/types/order.types";
+} from "../types/cart.types";
 
 export const cartService = {
   getCart: async (): Promise<CartDto> => {
-    const res = await api.get<CartDto>("/carts/me");
+    const res = await apiClient.get<CartDto>("/carts/me");
     return res.data;
   },
   addItem: async (request: AddToCartRequest): Promise<CartItemDto> => {
-    const res = await api.post<CartItemDto>("/carts/items", request);
+    const res = await apiClient.post<CartItemDto>("/carts/items", request);
     return res.data;
   },
   increaseItem: async (productId: number): Promise<CartItemDto> => {
-    const res = await api.patch<CartItemDto>(
+    const res = await apiClient.patch<CartItemDto>(
       `/carts/items/${productId}/increase`,
       {},
     );
     return res.data;
   },
   decreaseItem: async (productId: number): Promise<void> => {
-    await api.patch(`/carts/items/${productId}/decrease`);
+    await apiClient.patch(`/carts/items/${productId}/decrease`);
   },
   removeItem: async (productId: number): Promise<void> => {
-    await api.delete(`/carts/items/${productId}`);
+    await apiClient.delete(`/carts/items/${productId}`);
   },
   clearCart: async (): Promise<void> => {
-    await api.delete("/carts/items");
-  },
-  createCart: async (): Promise<CartDto> => {
-    const res = await api.post<CartDto>("/carts");
-    return res.data;
+    await apiClient.delete("/carts/items");
   },
 };

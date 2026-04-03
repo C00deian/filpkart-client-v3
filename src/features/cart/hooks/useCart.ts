@@ -1,40 +1,41 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { cartService } from '@/services/cartService'
-import { useAuth } from '@/features/auth/hooks/useAuth'
-import type { AddToCartRequest } from '@/types/order.types'
+import { QUERY_TIMES } from '@/config/constants'
+import { cartService } from '@/features/cart/services/cartService'
+import { useAuthValue } from '@/features/auth/hooks/useAuthValue'
+import type { AddToCartRequest } from '@/features/cart/types/cart.types'
 import { toast } from 'react-toastify'
 
 export const CART_KEY = ['cart']
 
 export const useCart = () => {
-  const { user } = useAuth()
+  const { user } = useAuthValue()
   const qc = useQueryClient()
 
   const { data: cart, isLoading } = useQuery({
     queryKey: CART_KEY,
     queryFn: cartService.getCart,
     enabled: !!user,
-    staleTime: 1000 * 60 * 2,
+    staleTime: QUERY_TIMES.SHORT,
   })
 
   const addItem = useMutation({
-    mutationFn: (req: AddToCartRequest) => cartService.addItem(req),
+    mutationFn: cartService.addItem,
     onSuccess: () => { qc.invalidateQueries({ queryKey: CART_KEY }); toast.success('Added to cart!') },
     onError: () => toast.error('Failed to add item'),
   })
 
   const removeItem = useMutation({
-    mutationFn: (productId: number) => cartService.removeItem(productId),
+    mutationFn: cartService.removeItem,
     onSuccess: () => qc.invalidateQueries({ queryKey: CART_KEY }),
   })
 
   const increaseItem = useMutation({
-    mutationFn: (productId: number) => cartService.increaseItem(productId),
+    mutationFn: cartService.increaseItem,
     onSuccess: () => qc.invalidateQueries({ queryKey: CART_KEY }),
   })
 
   const decreaseItem = useMutation({
-    mutationFn: (productId: number) => cartService.decreaseItem(productId),
+    mutationFn: cartService.decreaseItem,
     onSuccess: () => qc.invalidateQueries({ queryKey: CART_KEY }),
   })
 

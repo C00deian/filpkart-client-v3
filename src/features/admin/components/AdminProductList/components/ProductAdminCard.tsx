@@ -1,6 +1,5 @@
-import { useState } from 'react'
-import { MoreVertical, Pencil, Trash2, ToggleLeft, ToggleRight } from 'lucide-react'
-import type { Product } from '@/types/product.types'
+import { Pencil, Trash2, ToggleLeft, ToggleRight } from 'lucide-react'
+import type { Product } from '@/features/products/types/product.types'
 import { formatPrice } from '@/utils/formatPrice'
 
 interface Props {
@@ -11,14 +10,9 @@ interface Props {
 }
 
 const ProductAdminCard = ({ product, onDelete, onToggleStock, onEdit }: Props) => {
-  const [open, setOpen] = useState(false)
-
   return (
-    <div
-      className="relative border border-[#e0e0e0] bg-white rounded-sm p-4 hover:shadow-sm transition"
-      onMouseLeave={() => setOpen(false)}
-    >
-      <div className="flex items-start gap-4">
+    <div className="border border-[#e0e0e0] bg-white rounded-sm p-4 hover:shadow-sm transition">
+      <div className="flex items-center gap-4">
         {/* Thumbnail */}
         <div className="w-16 h-16 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
           {product.images?.[0]?.imageUrl
@@ -51,43 +45,38 @@ const ProductAdminCard = ({ product, onDelete, onToggleStock, onEdit }: Props) =
           </div>
         </div>
 
-        {/* 3-dot menu */}
-        <div className="relative flex-shrink-0">
+        <div className="ml-auto flex flex-shrink-0 items-center justify-center gap-2 self-center">
           <button
-            onClick={(e) => { e.stopPropagation(); setOpen(p => !p) }}
-            className="p-2 rounded-full hover:bg-gray-100 transition"
+            onClick={() => onEdit(product)}
+            title="Edit"
+            aria-label="Edit product"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 text-slate-700 transition hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
           >
-            <MoreVertical className="w-4 h-4 text-gray-600" />
+            <Pencil className="h-4 w-4" />
           </button>
-
-          {open && (
-            <div className="absolute right-0 mt-1 w-36 bg-white border border-[#e0e0e0] shadow-md rounded-sm z-10">
-              <button
-                onClick={() => { setOpen(false); onEdit(product) }}
-                className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition"
-              >
-                <Pencil className="w-3.5 h-3.5 text-primary" /> Edit
-              </button>
-              <button
-                onClick={() => { setOpen(false); onToggleStock(product.id) }}
-                className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition"
-              >
-                {product.inStock
-                  ? <><ToggleRight className="w-3.5 h-3.5 text-orange-500" /> Mark Out of Stock</>
-                  : <><ToggleLeft  className="w-3.5 h-3.5 text-green-500" /> Mark In Stock</>
-                }
-              </button>
-              <button
-                onClick={() => {
-                  setOpen(false)
-                  if (confirm('Delete this product?')) onDelete(product.id)
-                }}
-                className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition"
-              >
-                <Trash2 className="w-3.5 h-3.5" /> Delete
-              </button>
-            </div>
-          )}
+          <button
+            onClick={() => onToggleStock(product.id)}
+            title={product.inStock ? 'Mark Out of Stock' : 'Mark In Stock'}
+            aria-label={product.inStock ? 'Mark product out of stock' : 'Mark product in stock'}
+            className={`inline-flex h-9 w-9 items-center justify-center rounded-md border transition ${
+              product.inStock
+                ? 'border-orange-200 text-orange-600 hover:bg-orange-50'
+                : 'border-green-200 text-green-600 hover:bg-green-50'
+            }`}
+          >
+            {product.inStock
+              ? <ToggleRight className="h-4 w-4" />
+              : <ToggleLeft className="h-4 w-4" />
+            }
+          </button>
+          <button
+            onClick={() => { if (confirm('Delete this product?')) onDelete(product.id) }}
+            title="Delete"
+            aria-label="Delete product"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-red-200 text-red-600 transition hover:bg-red-50"
+          >
+            <Trash2 className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </div>
@@ -95,4 +84,3 @@ const ProductAdminCard = ({ product, onDelete, onToggleStock, onEdit }: Props) =
 }
 
 export default ProductAdminCard
-

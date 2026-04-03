@@ -1,5 +1,5 @@
 import { ShoppingBag } from 'lucide-react'
-import type { Order } from '@/types/order.types'
+import type { Order } from '@/features/orders/types/order.types'
 import { formatPrice } from '@/utils/formatPrice'
 import Badge from '@/components/ui/Badge'
 

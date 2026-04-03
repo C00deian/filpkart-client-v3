@@ -1,7 +1,8 @@
-import api from './api'
-import type { ApiResponse } from '@/types/api.types'
-import type { UserProfile } from '@/types/user.types'
-import type { UpdateProfileRequest } from '@/types/profile.types'
+import apiClient from "@/services/apiClient";
+import { API_ENDPOINTS } from "@/config/constants";
+import type { ApiResponse } from "@/types/api.types";
+import type { UserProfile } from "@/features/account/types/user.types";
+import type { UpdateProfileRequest } from "@/features/account/types/profile.types";
 
 export const userService = {
   /**
@@ -9,8 +10,10 @@ export const userService = {
    * Backend: UserController#getProfile (reads X-Auth-User-Id from Gateway header)
    */
   getProfile: async (): Promise<UserProfile> => {
-    const res = await api.get<ApiResponse<UserProfile>>('/users/profile')
-    return res.data.data
+    const res = await apiClient.get<ApiResponse<UserProfile>>(
+      API_ENDPOINTS.USERS.PROFILE,
+    );
+    return res.data.data;
   },
 
   /**
@@ -18,8 +21,11 @@ export const userService = {
    * Backend: UserController#updateUser
    */
   updateProfile: async (data: UpdateProfileRequest): Promise<UserProfile> => {
-    const res = await api.put<ApiResponse<UserProfile>>('/users/profile', data)
-    return res.data.data
+    const res = await apiClient.put<ApiResponse<UserProfile>>(
+      API_ENDPOINTS.USERS.PROFILE,
+      data,
+    );
+    return res.data.data;
   },
 
   /**
@@ -27,8 +33,6 @@ export const userService = {
    * Backend: UserController#deleteUserById
    */
   deleteAccount: async (): Promise<void> => {
-    await api.delete('/users')
+    await apiClient.delete(API_ENDPOINTS.USERS.ROOT);
   },
-}
-
-
+};

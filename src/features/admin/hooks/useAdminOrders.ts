@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { QUERY_TIMES } from '@/config/constants'
 import { getAllOrders, dispatchOrder, deliverOrder } from '../services/adminService'
 import { toast } from 'react-toastify'
 
@@ -10,11 +11,11 @@ export const useAdminOrders = () => {
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ADMIN_ORDERS_KEY,
     queryFn: getAllOrders,
-    staleTime: 1000 * 60,
+    staleTime: QUERY_TIMES.ADMIN,
   })
 
   const dispatch = useMutation({
-    mutationFn: (id: string) => dispatchOrder(id),
+    mutationFn: dispatchOrder,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ADMIN_ORDERS_KEY })
       toast.success('Order dispatched!')
@@ -23,7 +24,7 @@ export const useAdminOrders = () => {
   })
 
   const deliver = useMutation({
-    mutationFn: (id: string) => deliverOrder(id),
+    mutationFn: deliverOrder,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ADMIN_ORDERS_KEY })
       toast.success('Order marked as delivered!')

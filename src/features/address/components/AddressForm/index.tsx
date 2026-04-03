@@ -1,7 +1,7 @@
 import { useAddressForm } from "./hooks/useAddressForm";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import type { AddressDto } from "@/types/address.types";
+import type { AddressDto } from "@/features/address/types/address.types";
 
 const STATES = [
   "Andhra Pradesh",

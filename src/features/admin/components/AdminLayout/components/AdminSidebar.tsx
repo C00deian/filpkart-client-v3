@@ -2,7 +2,8 @@ import {Link, NavLink} from 'react-router-dom'
 import {
   LayoutDashboard, Package, ShoppingBag, Tag, LogOut, ChevronRight
 } from 'lucide-react'
-import { useAuth } from '@/features/auth/hooks/useAuth'
+import { useAuthActions } from '@/features/auth/hooks/useAuthActions'
+import { useAuthValue } from '@/features/auth/hooks/useAuthValue'
 import { ROUTES } from '@/routes/routePaths'
 
 const NAV = [
@@ -13,7 +14,8 @@ const NAV = [
 ]
 
 const AdminSidebar = () => {
-  const { user, logout } = useAuth()
+  const { user } = useAuthValue()
+  const { logout } = useAuthActions()
 
   return (
     <aside className="w-60 bg-slate-900 min-h-screen flex flex-col flex-shrink-0">

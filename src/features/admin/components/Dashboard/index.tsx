@@ -5,7 +5,6 @@ import { formatPrice } from '@/utils/formatPrice'
 import StatCard from './components/StatCard'
 import RecentOrders from './components/RecentOrders'
 import { Skeleton } from '@/components/ui/Skeleton'
-import Navbar from "@/components/Navbar/Navbar.tsx";
 
 const Dashboard = () => {
   const { orders, stats: orderStats, isLoading: ordersLoading } = useAdminOrders()

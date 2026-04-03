@@ -3,7 +3,7 @@ import { Plus, MapPin, RefreshCw } from 'lucide-react'
 import { useAddresses } from '@/features/address/hooks/useAddresses'
 import AddressCard from '../AddressCard'
 import AddressForm from '../AddressForm'
-import type { AddressDto } from '@/types/address.types'
+import type { AddressDto } from '@/features/address/types/address.types'
 import { Skeleton } from '@/components/ui/Skeleton'
 
 const AddressList = () => {

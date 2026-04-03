@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useAuthActions } from "@/features/auth/hooks/useAuthActions";
+import { useAuthValue } from "@/features/auth/hooks/useAuthValue";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { RiShoppingBag3Fill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
@@ -8,7 +9,8 @@ import { useCurrentUserDisplayName } from "@/features/account/hooks/useCurrentUs
 import { FaSignOutAlt } from "react-icons/fa";
 
 const AccountSidebar = () => {
-  const { logout, isAdmin } = useAuth();
+  const { logout } = useAuthActions();
+  const { isAdmin } = useAuthValue();
   const { displayName } = useCurrentUserDisplayName();
 
   const subLinkClass = ({ isActive }: { isActive: boolean }) =>

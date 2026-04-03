@@ -1,19 +1,19 @@
 import { Link } from "react-router-dom";
-import {ShoppingCart, Menu, X, ChevronDown, MapPin} from "lucide-react";
+import { ShoppingCart, Menu, X } from "lucide-react";
 import { useState } from "react";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useAuthValue } from "@/features/auth/hooks/useAuthValue";
 import { useCart } from "@/features/cart/hooks/useCart";
 import { ROUTES } from "@/routes/routePaths";
 
-import SearchBar from "../layout/Header/components/SearchBar";
-import UserMenu from "../layout/Header/components/UserMenu";
-import MoreInfo from "./MoreInfo";
+import SearchBar from "./components/SearchBar";
+import UserMenu from "./components/UserMenu";
+import MoreInfo from "./components/MoreInfo";
 
 import logo from "@/assets/icons/logo.png";
 import logoName from "@/assets/icons/logoname.png";
 
 const Navbar = () => {
-  const { isAdmin } = useAuth();
+  const { isAdmin } = useAuthValue();
   const { itemCount } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

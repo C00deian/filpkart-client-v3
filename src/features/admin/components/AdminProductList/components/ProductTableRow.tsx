@@ -1,5 +1,5 @@
 import { Trash2, ToggleLeft, ToggleRight, Pencil } from 'lucide-react'
-import type { Product } from '@/types/product.types'
+import type { Product } from '@/features/products/types/product.types'
 import { formatPrice } from '@/utils/formatPrice'
 import Badge from '@/components/ui/Badge'
 
@@ -36,24 +36,37 @@ const ProductTableRow = ({ product, onDelete, onToggleStock, onEdit }: Props) =>
       />
     </td>
     <td className="px-4 py-3">
-      <div className="flex items-center gap-1">
-        <button onClick={() => onEdit(product)}
-          className="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors"
-          title="Edit">
-          <Pencil className="w-4 h-4" />
+      <div className="flex items-center justify-end gap-2">
+        <button
+          onClick={() => onEdit(product)}
+          title="Edit"
+          aria-label="Edit product"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 text-slate-700 transition hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
+        >
+          <Pencil className="h-4 w-4" />
         </button>
-        <button onClick={() => onToggleStock(product.id)}
-          className="p-1.5 rounded-lg text-slate-400 hover:text-orange-500 hover:bg-orange-50 transition-colors"
-          title={product.inStock ? 'Mark Out of Stock' : 'Mark In Stock'}>
+        <button
+          onClick={() => onToggleStock(product.id)}
+          title={product.inStock ? 'Mark Out of Stock' : 'Mark In Stock'}
+          aria-label={product.inStock ? 'Mark product out of stock' : 'Mark product in stock'}
+          className={`inline-flex h-9 w-9 items-center justify-center rounded-md border transition ${
+            product.inStock
+              ? 'border-orange-200 text-orange-600 hover:bg-orange-50'
+              : 'border-green-200 text-green-600 hover:bg-green-50'
+          }`}
+        >
           {product.inStock
-            ? <ToggleRight className="w-4 h-4 text-green-500" />
-            : <ToggleLeft  className="w-4 h-4 text-slate-400" />
+            ? <ToggleRight className="h-4 w-4" />
+            : <ToggleLeft className="h-4 w-4" />
           }
         </button>
-        <button onClick={() => { if (confirm('Delete this product?')) onDelete(product.id) }}
-          className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
-          title="Delete">
-          <Trash2 className="w-4 h-4" />
+        <button
+          onClick={() => { if (confirm('Delete this product?')) onDelete(product.id) }}
+          title="Delete"
+          aria-label="Delete product"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-red-200 text-red-600 transition hover:bg-red-50"
+        >
+          <Trash2 className="h-4 w-4" />
         </button>
       </div>
     </td>

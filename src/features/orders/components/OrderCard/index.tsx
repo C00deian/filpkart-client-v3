@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { OrderDto } from "@/types/order.types";
+import type { OrderDto } from "@/features/orders/types/order.types";
 import { formatPrice } from "@/utils/formatPrice";
 import { Star } from "lucide-react";
 import { ROUTES } from "@/routes/routePaths";

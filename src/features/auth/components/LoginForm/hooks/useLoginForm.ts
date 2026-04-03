@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
 import { loginSchema, LoginFormValues } from '../schema/loginSchema'
-import { authService } from '@/services/authService'
-import { useAuth } from '@/features/auth/hooks/useAuth'
+import { authService } from '@/features/auth/services/authService'
+import { useAuthActions } from '@/features/auth/hooks/useAuthActions'
 import { ROUTES } from '@/routes/routePaths'
 
 export const useLoginForm = () => {
-  const { login } = useAuth()
+  const { login } = useAuthActions()
   const navigate = useNavigate()
   const [isLoading, setLoading] = useState(false)
 

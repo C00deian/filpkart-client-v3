@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { addressSchema, AddressFormValues } from '../schema/addressSchema'
 import { useAddresses } from '@/features/address/hooks/useAddresses'
-import type { AddressDto } from '@/types/address.types'
+import type { AddressDto } from '@/features/address/types/address.types'
 
 interface Options {
   editAddress?: AddressDto | null

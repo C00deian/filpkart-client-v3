@@ -1,14 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Search } from "lucide-react";
-import { useDebounce } from "@/hooks/useDebounce";
 import { ROUTES } from "@/routes/routePaths";
 
 const SearchBar = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [value, setValue] = useState(searchParams.get("search") ?? "");
-  const debounced = useDebounce(value, 400);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

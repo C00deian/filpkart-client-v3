@@ -1,5 +1,5 @@
 import StarRating from '@/components/shared/StarRating'
-import type { Review } from '@/types/product.types'
+import type { Review } from '@/features/products/types/product.types'
 import { ThumbsUp } from 'lucide-react'
 
 interface Props { reviews: Review[] }

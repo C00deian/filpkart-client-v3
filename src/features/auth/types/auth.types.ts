@@ -1,16 +1,23 @@
-import { User } from "@/types/auth.types";
-
-
 export interface LoginRequest {
-  email: string;
-  password: string;
+  email?: string;
+  phoneNumber?: string;
 }
 export interface RegisterRequest {
-  name: string;
-  email: string;
-  password: string;
+  phoneNumber?: string;
 }
 export interface AuthResponse {
-  token: string;
-  user: User;
+  success: boolean;
+  message: string;
+  data: { token: string };
+}
+
+export interface User {
+  
+  id: number;
+  userId: string;
+  name?: string | null;
+  email?: string | null;
+  role: "USER" | "ADMIN" | "SELLER" | string;
+  gender?: string | null;
+  phoneNumber?: string | null;
 }

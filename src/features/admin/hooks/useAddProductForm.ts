@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { productFormSchema, ProductFormValues } from '../components/AddProductForm/schema/productSchema'
 import { addProduct } from '../services/adminService'
 import { uploadToCloudinary } from '@/utils/cloudinary'
-import type { ImageType } from '@/types/product.types'
+import type { ImageType } from '@/features/products/types/product.types'
 import { ADMIN_PRODUCTS_KEY } from './useAdminProducts'
 
 export const useAddProductForm = (onSuccess?: () => void) => {

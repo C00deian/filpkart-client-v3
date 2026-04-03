@@ -1,4 +1,4 @@
-import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
+import HomeLayout from '@/app/layouts/HomeLayout'
 import ProductDetail from '@/features/products/components/ProductDetail'
 
 const ProductDetailPage = () => (

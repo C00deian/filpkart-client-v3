@@ -1,4 +1,4 @@
-import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
+import HomeLayout from '@/app/layouts/HomeLayout'
 import { Skeleton } from '@/components/ui/Skeleton'
 import { useOrder } from '@/features/orders/hooks/useOrders'
 import { ROUTES } from '@/routes/routePaths'
@@ -100,4 +100,3 @@ const OrderDetailPage = () => {
 }
 
 export default OrderDetailPage
-

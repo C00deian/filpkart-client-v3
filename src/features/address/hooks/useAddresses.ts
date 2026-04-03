@@ -1,14 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { addressService } from '@/services/addressService'
-import type { AddressRequest } from '@/types/address.types'
+import { QUERY_TIMES } from '@/config/constants'
+import { addressService } from '@/features/address/services/addressService'
+import type { AddressRequest } from '@/features/address/types/address.types'
 import { toast } from 'react-toastify'
-import { useAuth } from '@/features/auth/hooks/useAuth'
+import { useAuthValue } from '@/features/auth/hooks/useAuthValue'
 
 export const ADDRESS_KEY = ['addresses']
 
 export const useAddresses = () => {
   const qc = useQueryClient()
-  const { user } = useAuth()
+  const { user } = useAuthValue()
 
   const {
     data: addresses = [],
@@ -20,11 +21,11 @@ export const useAddresses = () => {
     queryKey: ADDRESS_KEY,
     queryFn: addressService.getAddresses,
     enabled: !!user,
-    staleTime: 1000 * 60 * 5,
+    staleTime: QUERY_TIMES.DEFAULT,
   })
 
   const addAddress = useMutation({
-    mutationFn: (payload: AddressRequest) => addressService.addAddress(payload),
+    mutationFn: addressService.addAddress,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ADDRESS_KEY })
       toast.success('Address added!')
@@ -43,7 +44,7 @@ export const useAddresses = () => {
   })
 
   const deleteAddress = useMutation({
-    mutationFn: (id: number) => addressService.deleteAddress(id),
+    mutationFn: addressService.deleteAddress,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ADDRESS_KEY })
       toast.success('Address removed')

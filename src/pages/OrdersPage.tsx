@@ -4,7 +4,7 @@ import { Package, RefreshCw } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '@/routes/routePaths'
 import { Skeleton } from '@/components/ui/Skeleton'
-import HomeLayout from '@/components/layout/Header/components/HomeLayout/HomeLayout'
+import HomeLayout from '@/app/layouts/HomeLayout'
 
 const OrdersPage = () => {
   const { data: orders = [], isLoading, isError, refetch } = useOrders()

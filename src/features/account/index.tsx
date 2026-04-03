@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import HomeLayout from "@/components/layout/Header/components/HomeLayout/HomeLayout";
+import HomeLayout from "@/app/layouts/HomeLayout";
 import AccountSidebar from "./components/AccountSidebar";
 
 const AccountLayout = () => {

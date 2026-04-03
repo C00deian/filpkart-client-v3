@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { UploadedImageType } from '@/types/product.types'
+import type { UploadedImageType } from '@/features/products/types/product.types'
 
 interface Props { images: UploadedImageType[] }
 

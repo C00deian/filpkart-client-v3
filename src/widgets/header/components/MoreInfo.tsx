@@ -1,21 +1,14 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
-  User,
   ChevronDown,
-  Package,
-  Heart,
   Store,
   Bell,
   LifeBuoy,
   AlignEndVertical,
-
 } from "lucide-react";
 
-// import { ROUTES } from "@/routes/routePaths";
-
 const MoreInfo = () => {
-
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -31,14 +24,11 @@ const MoreInfo = () => {
 
 
 
-  /* ✅ MENU CONFIG */
   const userMenuItems = [
-    { label: "Become a Seller", icon: Store, to: '' },
-    { label: "Notification Settings", icon: Bell, to: '' },
-    { label: "24x7 Customer Care", icon: LifeBuoy, to: '' },
-    { label: "Advertise on Flipkart", icon: AlignEndVertical, to: '' },
-   
-
+    { label: "Become a Seller", icon: Store, to: "" },
+    { label: "Notification Settings", icon: Bell, to: "" },
+    { label: "24x7 Customer Care", icon: LifeBuoy, to: "" },
+    { label: "Advertise on Flipkart", icon: AlignEndVertical, to: "" },
   ];
 
 
@@ -50,16 +40,14 @@ const MoreInfo = () => {
       onMouseLeave={() => setOpen(false)}
     >
       <button className="flex items-center gap-2 text-slate-800 text-[15px] font-medium hover:text-primary transition-all group py-4">
-    
         <span>More</span>
         <ChevronDown
-          className={` w-3.5 h-3.5 transition-transform duration-300 ${open ? "rotate-180 text-primary" : "text-slate-400"}`}
+          className={`w-3.5 h-3.5 transition-transform duration-300 ${open ? "rotate-180 text-primary" : "text-slate-400"}`}
         />
       </button>
 
       {open && (
         <>
-          {/* Transparent bridge to prevent menu from closing when moving mouse from button to menu */}
           <div className="absolute top-10 left-0 w-full h-4 z-[109]" />
 
           <div className="absolute right-0 top-[52px] w-64 bg-white rounded-xl shadow-2xl border border-slate-100 py-2 z-[110] animate-in fade-in zoom-in-95 duration-200 origin-top-right">
@@ -70,7 +58,6 @@ const MoreInfo = () => {
             </div>
 
             <div className="py-1">
-              {/* ✅ MAPPED MENU */}
               {userMenuItems.map(({ label, icon: Icon, to }) => (
                 <Link
                   key={label}
@@ -83,7 +70,6 @@ const MoreInfo = () => {
                 </Link>
               ))}
             </div>
-           
           </div>
         </>
       )}

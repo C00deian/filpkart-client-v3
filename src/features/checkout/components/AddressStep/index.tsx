@@ -1,8 +1,7 @@
-import { useNavigate } from 'react-router-dom'
+
 import { MapPin, Plus } from 'lucide-react'
 import { useState } from 'react'
-import type { AddressDto } from '@/types/user.types'
-import { ROUTES } from '@/routes/routePaths'
+import type { AddressDto } from '@/features/address/types/address.types'
 import Button from '@/components/ui/Button'
 
 interface Props {
@@ -42,7 +41,9 @@ const AddressStep = ({ addresses, onSelect }: Props) => {
                   {addr.city}
                 </span>
               </div>
-              <p className="text-sm text-slate-700">{addr.street}, {addr.city} - {addr.zip}</p>
+              <p className="text-sm text-slate-700">
+                {addr.addressLine ?? addr.street}, {addr.city} - {addr.pincode ?? addr.zip}
+              </p>
 
               {selected === addr.id && (
                 <Button onClick={handleContinue} size="sm" className="mt-3">

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { MoreVertical, Pencil, Trash2 } from "lucide-react"
-import type { AddressDto } from "@/types/address.types"
+import type { AddressDto } from "@/features/address/types/address.types"
 
 interface Props {
   address: AddressDto

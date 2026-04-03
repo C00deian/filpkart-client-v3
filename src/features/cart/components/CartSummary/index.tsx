@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { formatPrice } from '@/utils/formatPrice'
 import { ROUTES } from '@/routes/routePaths'
-import type { CartDto } from '@/types/order.types'
+import type { CartDto } from '@/features/cart/types/cart.types'
 
 interface Props {
   cart: CartDto

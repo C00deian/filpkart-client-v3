@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
-import { productService } from '@/services/productService'
-import type { ProductFilters } from '@/types/product.types'
+import { QUERY_TIMES } from '@/config/constants'
+import { productService } from '@/features/products/services/productService'
+import type { ProductFilters } from '@/features/products/types/product.types'
 
 export const PRODUCTS_KEY = 'products'
 
@@ -21,7 +22,7 @@ export const useProducts = (extraFilters?: ProductFilters) => {
   return useQuery({
     queryKey: [PRODUCTS_KEY, filters],
     queryFn: () => productService.getProducts(filters),
-    staleTime: 1000 * 60 * 5,
+    staleTime: QUERY_TIMES.DEFAULT,
     placeholderData: prev => prev,
   })
 }

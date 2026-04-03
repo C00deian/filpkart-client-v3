@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Heart, ShoppingCart } from 'lucide-react'
 import { useState } from 'react'
-import type { Product } from '@/types/product.types'
+import type { Product } from '@/features/products/types/product.types'
 import StarRating from '../StarRating'
 import PriceDisplay from '../PriceDisplay'
 import { useCart } from '@/features/cart/hooks/useCart'
