@@ -11,12 +11,14 @@ export const useProfile = () => {
 
   const { data: profile, isLoading } = useCurrentUserProfile();
 
+  console.log("useProfile - profile:", profile);
+
   // Update Profile via PUT /users/profile
   const updateProfile = useMutation({
     mutationFn: userService.updateProfile,
 
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: PROFILE_KEY });
+      qc.invalidateQueries({ queryKey: ["profile"] });
       toast.success("Profile updated successfully!");
     },
 

@@ -27,7 +27,7 @@ const AdminProductList = () => {
   const handleDelete = async (id: number) => {
     try {
       setDeletingId(id)
-      await deleteProduct(id)
+      deleteProduct(id)
       if (editProduct?.id === id) {
         setEditProduct(null)
         setShowForm(false)
@@ -46,9 +46,9 @@ const AdminProductList = () => {
     <div className="space-y-4">
       {/* Title row */}
       <div className="flex items-center justify-between p-2">
-        <h2 className="font-bold text-slate-800 flex items-center">
-          <Package className="w-4 h-4 text-primary mr-2" /> Manage Products
-        </h2>
+        <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+          <Package className="w-6 h-6 text-primary" /> Manage Products
+        </h1>
       </div>
 
       {/* Filters */}

@@ -26,20 +26,11 @@ export interface Order {
   orderDate: string;
 }
 
-export type OrderStatus =
-  | "PENDING"
-  | "CONFIRMED"
-  | "PROCESSING"
-  | "SHIPPED"
-  | "DELIVERED"
-  | "CANCELLED"
-  | "RETURNED";
 
-export interface CheckoutRequest {
-  cartId: string;
-}
 
 export interface CheckoutResponse {
   orderId: string;
   checkoutUrl: string;
+  sessionId?: string;
+  hostedPageUrl?: string;
 }

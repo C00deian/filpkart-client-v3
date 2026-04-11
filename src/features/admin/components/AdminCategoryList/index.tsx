@@ -1,65 +1,9 @@
 import { useState } from 'react'
 import { Plus, Tag } from 'lucide-react'
 import { useCategories } from '@/features/products/hooks/useCategories'
-import { useAddCategoryForm } from '../../hooks/useAddCategoryForm'
-import Button from '@/components/ui/Button'
-import Input from '@/components/ui/Input'
 import { Skeleton } from '@/components/ui/Skeleton'
+import AddCategoryForm from '../AddCategoryForm'
 
-/* ── Inline form card — same shell as AddressForm / AddProductForm ── */
-const AddCategoryForm = ({ onClose }: { onClose: () => void }) => {
-  const { form, isLoading, autoSlug, onSubmit } = useAddCategoryForm(onClose)
-  const { register, formState: { errors }, watch } = form
-
-  return (
-    <div className="bg-white border border-slate-200 rounded-md shadow-sm">
-      {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-        <h2 className="text-sm font-bold text-primary uppercase">Add New Category</h2>
-      </div>
-
-      {/* Form */}
-      <form onSubmit={onSubmit} className="p-6 space-y-4">
-        <Input
-          {...register('name')}
-          label="Category Name"
-          placeholder="e.g. Electronics"
-          error={errors.name?.message}
-          onChange={e => {
-            register('name').onChange(e)
-            autoSlug(e.target.value)
-          }}
-        />
-        <Input
-          {...register('slug')}
-          label="Slug"
-          placeholder="e.g. electronics"
-          error={errors.slug?.message}
-          helperText="Auto-generated from name. Lowercase, hyphens only."
-        />
-        <Input
-          {...register('imageUrl')}
-          label="Image URL"
-          placeholder="https://..."
-          error={errors.imageUrl?.message}
-        />
-        {watch('imageUrl') && (
-          <img
-            src={watch('imageUrl')}
-            alt="preview"
-            className="w-20 h-20 rounded-lg object-cover border border-slate-200"
-          />
-        )}
-        <div className="flex gap-3 pt-2">
-          <Button type="button" variant="secondary" onClick={onClose} fullWidth>Cancel</Button>
-          <Button type="submit" isLoading={isLoading} fullWidth>Add Category</Button>
-        </div>
-      </form>
-    </div>
-  )
-}
-
-/* ── Main list ── */
 const AdminCategoryList = () => {
   const { data: categories = [], isLoading } = useCategories()
   const [showForm, setShowForm] = useState(false)
@@ -68,9 +12,9 @@ const AdminCategoryList = () => {
     <div className="space-y-4">
       {/* Title */}
       <div className="flex items-center justify-between p-2">
-        <h2 className="font-bold text-slate-800 flex items-center">
-          <Tag className="w-4 h-4 text-primary mr-2" /> Manage Categories
-        </h2>
+          <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+              <Tag className="w-6 h-6 text-primary" /> Manage Categories
+          </h1>
       </div>
 
       {/* Add Category inline toggle button */}
@@ -84,8 +28,7 @@ const AdminCategoryList = () => {
         </div>
       )}
 
-      {/* Inline form with slide-down animation */}
-      {showForm && (
+        {showForm && (
         <div className="animate-slideDown">
           <AddCategoryForm onClose={() => setShowForm(false)} />
         </div>
@@ -128,6 +71,5 @@ const AdminCategoryList = () => {
     </div>
   )
 }
-export default AdminCategoryList
 
-
+export default AdminCategoryList;

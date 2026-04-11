@@ -10,7 +10,7 @@ import { useUserMenu } from "./useUserMenu";
 const UserMenu = () => {
   const { user, isAdmin } = useAuthValue();
   const { logout } = useAuthActions();
-  const { displayName } = useCurrentUserDisplayName();
+  const { profile } = useCurrentUserDisplayName();
   const navigate = useNavigate();
   const { open, ref, menuItems, openMenu, closeMenu } = useUserMenu(isAdmin);
 
@@ -37,7 +37,7 @@ const UserMenu = () => {
       onMouseEnter={openMenu}
       onMouseLeave={closeMenu}
     >
-      <UserMenuTrigger displayName={displayName} open={open} />
+      <UserMenuTrigger displayName={profile && profile.name  ? profile.name : isAdmin ? "Admin" : "User"} open={open} />
 
       {open && (
         <UserMenuList

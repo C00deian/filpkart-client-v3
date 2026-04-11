@@ -22,6 +22,8 @@ const ProductListPage = Loadable(lazy(() => import("@/pages/ProductListPage")));
 const ProductDetailPage = Loadable(lazy(() => import("@/pages/ProductDetailPage")));
 const CartPage = Loadable(lazy(() => import("@/pages/CartPage")));
 const CheckoutPage = Loadable(lazy(() => import("@/pages/CheckoutPage")));
+const CheckoutSuccessPage = Loadable(lazy(() => import("@/pages/CheckoutSuccessPage")));
+const CheckoutCancelPage = Loadable(lazy(() => import("@/pages/CheckoutCancelPage")));
 const OrdersPage = Loadable(lazy(() => import("@/pages/OrdersPage")));
 const OrderDetailPage = Loadable(lazy(() => import("@/pages/OrderDetailPage")));
 const OrderConfirmationPage = Loadable(lazy(() => import("@/pages/OrderConfirmationPage")));
@@ -55,6 +57,10 @@ const AppRouter: FC = () => (
     <Route element={<PrivateRoute />}>
       <Route path={ROUTES.CART} element={<CartPage />} />
       <Route path={ROUTES.CHECKOUT} element={<CheckoutPage />} />
+      <Route path={ROUTES.CHECKOUT_SUCCESS} element={<CheckoutSuccessPage />} />
+      <Route path={ROUTES.CHECKOUT_CANCEL} element={<CheckoutCancelPage />} />
+      <Route path="/success" element={<CheckoutSuccessPage />} />
+      <Route path="/cancel" element={<CheckoutCancelPage />} />
       <Route path={ROUTES.ORDERS} element={<OrdersPage />} />
       <Route path={ROUTES.ORDER_DETAIL} element={<OrderDetailPage />} />
       <Route path="/order-confirmation" element={<OrderConfirmationPage />} />

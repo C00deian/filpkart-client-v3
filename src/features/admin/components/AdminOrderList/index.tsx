@@ -24,9 +24,11 @@ const AdminOrderList = () => {
     <div className="p-6 space-y-5">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-          <ShoppingBag className="w-6 h-6 text-primary" /> Orders
-        </h1>
+          <div className="flex items-center justify-between p-2">
+              <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                  <ShoppingBag className="w-6 h-6 text-primary" /> Manage Orders
+              </h1>
+          </div>
         <p className="text-slate-400 text-sm mt-0.5">{orders.length} total orders</p>
       </div>
 

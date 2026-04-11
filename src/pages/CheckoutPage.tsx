@@ -54,6 +54,9 @@ const CheckoutPage = () => {
     setIsPlacing(true)
     try {
       const res = await orderService.checkout(cart.id)
+      if (res.orderId) {
+        sessionStorage.setItem('pendingCheckoutOrderId', res.orderId)
+      }
       if (res.checkoutUrl) {
         window.location.href = res.checkoutUrl
       } else {
