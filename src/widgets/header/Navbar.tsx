@@ -9,6 +9,7 @@ import {
 import { useAuthValue } from "@/features/auth/hooks/useAuthValue";
 import { useCart } from "@/features/cart/hooks/useCart";
 import { useCategories } from "@/features/products/hooks/useCategories";
+import { useCurrentUserDisplayName } from "@/features/account/hooks/useCurrentUserDisplayName";
 import { ROUTES } from "@/routes/routePaths";
 
 import SearchBar from "./components/SearchBar";
@@ -23,6 +24,7 @@ const Navbar = () => {
   const { user, isAdmin } = useAuthValue();
   const { itemCount } = useCart();
   const { data: categories } = useCategories();
+  const { profile } = useCurrentUserDisplayName();
   const [activeMegaCategory, setActiveMegaCategory] = useState<{
     id: string | number;
     name: string;
@@ -30,6 +32,10 @@ const Navbar = () => {
   } | null>(null);
 
   const quickLinks = categories?.slice(0, 8) ?? [];
+  const displayName =
+    profile?.name ||
+    user?.name ||
+    (user?.email ? user.email.split("@")[0] : "");
 
   return (
     <header className="sticky top-0 z-[100] border-b border-black/10 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
@@ -73,9 +79,9 @@ const Navbar = () => {
           )}
           <Link
             to={user ? ROUTES.ACCOUNT : ROUTES.LOGIN}
-            className="text-fluid-sm text-slate-700 font-semibold"
+            className="text-fluid-sm text-slate-700 font-semibold max-w-[8rem] truncate"
           >
-            {user ? "Account" : "Login"}
+            {user ? displayName || "Account" : "Login"}
           </Link>
         </div>
 
