@@ -3,6 +3,7 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/routes/routePaths";
+import { authService } from "@/features/auth/services/authService";
 
 const LoginForm = () => {
   const { form, onSubmit, isLoading } = useLoginForm();
@@ -72,6 +73,7 @@ const LoginForm = () => {
             <div className="flex flex-col gap-3">
               <button
                 type="button"
+                onClick={() => authService.startGoogleLogin()}
                 className="w-full h-11 border border-slate-200 rounded bg-white hover:bg-slate-50 transition flex items-center justify-center gap-3 text-sm text-slate-600 font-medium"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">

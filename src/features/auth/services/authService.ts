@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from "@/config/constants";
 import apiClient from "@/services/apiClient";
+import { ENV } from "@/config/env";
 import type { ApiResponse } from "@/types/api.types";
 import type {
   User,
@@ -9,7 +10,6 @@ import type {
 } from "../types/auth.types";
 
 export const authService = {
-
   login: async (credentials: LoginRequest): Promise<AuthResponse> => {
     const res = await apiClient.post<AuthResponse>(
       API_ENDPOINTS.AUTH.LOGIN,
@@ -33,5 +33,8 @@ export const authService = {
     const res = await apiClient.get<ApiResponse<User>>(API_ENDPOINTS.AUTH.ME);
     return res.data.data;
   },
-  
+
+  startGoogleLogin: (): void => {
+    window.location.href = `${ENV.API_URL}${API_ENDPOINTS.AUTH.GOOGLE}`;
+  },
 };
