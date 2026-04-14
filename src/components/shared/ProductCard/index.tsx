@@ -30,10 +30,14 @@ const ProductCard = ({ product, originalPrice }: ProductCardProps) => {
             src={image ?? 'https://via.placeholder.com/200'}
             alt={product.name}
             className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+            decoding="async"
+            width={240}
+            height={240}
           />
         </div>
         <div className="p-3">
-          <p className="text-sm text-slate-800 font-medium line-clamp-2 leading-snug mb-1.5">{product.name}</p>
+          <p className="text-fluid-base text-slate-800 font-medium line-clamp-2 leading-snug mb-1.5">{product.name}</p>
           {product.rating && <StarRating rating={product.rating} size="sm" />}
           <div className="mt-1.5">
             <PriceDisplay price={product.price} originalPrice={originalPrice} size="sm" />

@@ -27,10 +27,10 @@ const footerLinks = {
 
 const Footer = () => (
   <footer className="bg-[#172337] text-white mt-auto">
-    <div className="max-w-[1200px] mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div className="max-w-[1200px] mx-auto px-4 py-10 grid-auto-fill-compact gap-8">
       {Object.entries(footerLinks).map(([section, links]) => (
         <div key={section}>
-          <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <p className="text-slate-400 text-fluid-sm font-semibold uppercase tracking-wider mb-3">
             {section}
           </p>
           <ul className="space-y-2">
@@ -38,7 +38,7 @@ const Footer = () => (
               <li key={link}>
                 <a
                   href="#"
-                  className="text-xs text-slate-300 hover:text-white transition-colors"
+                  className="text-fluid-sm text-slate-300 hover:text-white transition-colors"
                 >
                   {link}
                 </a>

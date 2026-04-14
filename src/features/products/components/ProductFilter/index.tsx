@@ -4,11 +4,11 @@ import { useState } from 'react'
 import { useCategories } from '@/features/products/hooks/useCategories'
 
 const PRICE_RANGES = [
-  { label: 'Under ₹500',       min: 0,    max: 500   },
-  { label: '₹500 – ₹1,000',   min: 500,  max: 1000  },
-  { label: '₹1,000 – ₹5,000', min: 1000, max: 5000  },
-  { label: '₹5,000 – ₹10,000',min: 5000, max: 10000 },
-  { label: 'Above ₹10,000',   min: 10000, max: undefined },
+  { label: 'Under ₹500', min: 0, max: 500 },
+  { label: '₹500 – ₹1,000', min: 500, max: 1000 },
+  { label: '₹1,000 – ₹5,000', min: 1000, max: 5000 },
+  { label: '₹5,000 – ₹10,000', min: 5000, max: 10000 },
+  { label: 'Above ₹10,000', min: 10000, max: undefined },
 ]
 const RATINGS = [4, 3, 2]
 
@@ -41,7 +41,7 @@ const ProductFilter = () => {
   }
 
   return (
-    <aside className="w-64 flex-shrink-0 bg-white rounded-sm shadow-card p-4 h-fit sticky top-20">
+    <aside className="w-full lg:w-64 lg:flex-shrink-0 bg-white rounded-sm shadow-card p-4 h-fit lg:sticky lg:top-24">
       <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">Filters</h3>
 
       <FilterSection title="Category">

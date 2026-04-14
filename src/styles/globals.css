@@ -3,9 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --fluid-step--1: clamp(0.78rem, 0.74rem + 0.2vw, 0.9rem);
+    --fluid-step-0: clamp(0.88rem, 0.82rem + 0.28vw, 1rem);
+    --fluid-step-1: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+    --fluid-step-2: clamp(1.18rem, 1.02rem + 0.8vw, 1.5rem);
+  }
+
   * {
     box-sizing: border-box;
   }
+
   body {
     font-family:
       "Varela Round",
@@ -13,7 +21,7 @@
       -apple-system,
       BlinkMacSystemFont,
       sans-serif;
-    font-size: 14px;
+    font-size: var(--fluid-step-0);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.1px;
@@ -28,5 +36,31 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  .text-fluid-sm {
+    font-size: var(--fluid-step--1);
+  }
+
+  .text-fluid-base {
+    font-size: var(--fluid-step-0);
+  }
+
+  .text-fluid-lg {
+    font-size: var(--fluid-step-1);
+  }
+
+  .text-fluid-xl {
+    font-size: var(--fluid-step-2);
+  }
+
+  .grid-auto-fill-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr));
+  }
+
+  .grid-auto-fill-compact {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 130px), 1fr));
   }
 }

@@ -15,18 +15,18 @@ const ProductListPage = () => {
 
   return (
     <HomeLayout>
-      <div className="max-w-[1200px] mx-auto px-4 py-4">
-        <div className="flex gap-4">
+      <div className="max-w-[1200px] mx-auto px-2 sm:px-4 py-3 sm:py-4">
+        <div className="flex flex-col lg:flex-row gap-4">
           <ProductFilter />
 
           <div className="flex-1 min-w-0">
             {/* Header */}
             <div className="bg-white rounded-sm shadow-card p-3 mb-3 flex items-center justify-between flex-wrap gap-2">
-              <h1 className="text-sm font-medium text-slate-700">
+              <h1 className="text-fluid-base font-medium text-slate-700">
                 {query
                   ? <><strong>Results for "</strong>{query}<strong>"</strong></>
                   : category ? <span className="capitalize">{category.replace(/-/g, ' ')}</span>
-                  : 'All Products'
+                    : 'All Products'
                 }
                 {!isLoading && <span className="text-slate-400 ml-2">({products?.length ?? 0})</span>}
               </h1>
@@ -34,7 +34,7 @@ const ProductListPage = () => {
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            <div className="grid-auto-fill-card gap-3 sm:gap-4">
               {isLoading
                 ? Array.from({ length: 8 }).map((_, i) => <ProductCardSkeleton key={i} />)
                 : products?.length
