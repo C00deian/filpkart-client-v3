@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   ShoppingCart,
   Home,
@@ -17,11 +17,17 @@ import MoreInfo from "./components/MoreInfo";
 
 import logo from "@/assets/icons/logo.png";
 import logoName from "@/assets/icons/logoname.png";
+import { useState } from "react";
 
 const Navbar = () => {
   const { user, isAdmin } = useAuthValue();
   const { itemCount } = useCart();
   const { data: categories } = useCategories();
+  const [activeMegaCategory, setActiveMegaCategory] = useState<{
+    id: string | number;
+    name: string;
+    slug: string;
+  } | null>(null);
 
   const quickLinks = categories?.slice(0, 8) ?? [];
 
@@ -100,7 +106,10 @@ const Navbar = () => {
         </nav>
       </div>
 
-      <div className="hidden md:block border-t border-slate-200/70 bg-white">
+      <div
+        className="hidden md:block border-t border-slate-200/70 bg-white"
+        onMouseLeave={() => setActiveMegaCategory(null)}
+      >
         <div className="max-w-[1248px] mx-auto px-6 py-2.5 flex items-center gap-5 overflow-x-auto no-scrollbar">
           <Link
             to={ROUTES.PRODUCTS}
@@ -113,31 +122,75 @@ const Navbar = () => {
               key={category.id}
               to={`${ROUTES.PRODUCTS}?category=${category.slug}`}
               className="text-fluid-sm text-slate-600 hover:text-primary whitespace-nowrap"
+              onMouseEnter={() =>
+                setActiveMegaCategory({
+                  id: category.id,
+                  name: category.name,
+                  slug: category.slug,
+                })
+              }
             >
               {category.name}
             </Link>
           ))}
         </div>
+
+        {activeMegaCategory && (
+          <div className="border-t border-slate-100 bg-white">
+            <div className="max-w-[1248px] mx-auto px-6 py-4 grid grid-cols-4 gap-4">
+              <div className="col-span-1">
+                <p className="text-fluid-sm text-slate-500 uppercase tracking-wide mb-2">
+                  Shop by Category
+                </p>
+                <Link
+                  to={`${ROUTES.PRODUCTS}?category=${activeMegaCategory.slug}`}
+                  className="text-fluid-lg font-semibold text-slate-900 hover:text-primary"
+                >
+                  {activeMegaCategory.name}
+                </Link>
+              </div>
+
+              <div className="col-span-3 grid grid-cols-3 gap-3">
+                {["Top Picks", "Best Seller", "New Arrivals", "Budget Buys", "Trending", "Staff Choice"].map((label) => (
+                  <Link
+                    key={label}
+                    to={`${ROUTES.PRODUCTS}?category=${activeMegaCategory.slug}`}
+                    className="rounded-lg border border-slate-100 px-3 py-2 text-fluid-sm text-slate-700 hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-colors"
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[120] bg-white border-t border-slate-200 px-2 py-2 grid grid-cols-4">
-        <Link
+        <NavLink
           to={ROUTES.HOME}
-          className="flex flex-col items-center justify-center gap-1 text-[11px] text-slate-700"
+          end
+          className={({ isActive }) =>
+            `flex flex-col items-center justify-center gap-1 text-[11px] transition-colors ${isActive ? "text-primary" : "text-slate-700"}`
+          }
         >
           <Home className="w-4 h-4" />
           Home
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to={ROUTES.PRODUCTS}
-          className="flex flex-col items-center justify-center gap-1 text-[11px] text-slate-700"
+          className={({ isActive }) =>
+            `flex flex-col items-center justify-center gap-1 text-[11px] transition-colors ${isActive ? "text-primary" : "text-slate-700"}`
+          }
         >
           <Grid2x2 className="w-4 h-4" />
           Categories
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to={ROUTES.CART}
-          className="flex flex-col items-center justify-center gap-1 text-[11px] text-slate-700 relative"
+          className={({ isActive }) =>
+            `flex flex-col items-center justify-center gap-1 text-[11px] relative transition-colors ${isActive ? "text-primary" : "text-slate-700"}`
+          }
         >
           <span className="relative inline-flex">
             <ShoppingCart className="w-4 h-4" />
@@ -148,14 +201,16 @@ const Navbar = () => {
             )}
           </span>
           Cart
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to={user ? ROUTES.ACCOUNT : ROUTES.LOGIN}
-          className="flex flex-col items-center justify-center gap-1 text-[11px] text-slate-700"
+          className={({ isActive }) =>
+            `flex flex-col items-center justify-center gap-1 text-[11px] transition-colors ${isActive ? "text-primary" : "text-slate-700"}`
+          }
         >
           <UserRound className="w-4 h-4" />
           {user ? "Account" : "Login"}
-        </Link>
+        </NavLink>
       </nav>
     </header>
   );

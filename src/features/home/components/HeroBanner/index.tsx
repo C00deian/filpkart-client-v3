@@ -52,9 +52,9 @@ const HeroBanner = () => {
   }, []);
 
   return (
-    <div className="mb-5 rounded-[20px] px-1 py-8 sm:px-4 sm:py-10">
-      <div className="relative mx-auto max-w-[980px]">
-        <div className="relative h-[210px] sm:h-[300px]">
+    <div className="mb-4 sm:mb-5 rounded-[16px] px-1 py-3 sm:px-3 sm:py-6">
+      <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-[16px] sm:rounded-[20px]">
+        <div className="relative h-[170px] sm:h-[230px] md:h-[300px]">
           {SLIDES.map((slide, index) => {
             const offset = getSlideOffset(index, currentSlide, SLIDES.length);
             const absOffset = Math.abs(offset);
@@ -71,19 +71,21 @@ const HeroBanner = () => {
             const overlayOpacity = isActive ? 0 : absOffset === 1 ? 0.18 : 0.3;
             const translateX =
               offset === -2
-                ? "calc(-1 * clamp(165px, 36vw, 360px))"
+                ? "calc(-1 * clamp(90px, 24vw, 260px))"
                 : offset === -1
-                  ? "calc(-1 * clamp(92px, 21vw, 210px))"
+                  ? "calc(-1 * clamp(56px, 14vw, 140px))"
                   : offset === 1
-                    ? "clamp(92px, 21vw, 210px)"
+                    ? "clamp(56px, 14vw, 140px)"
                     : offset === 2
-                      ? "clamp(165px, 36vw, 360px)"
+                      ? "clamp(90px, 24vw, 260px)"
                       : "0px";
+
+            const shouldHideOnMobile = absOffset > 0;
 
             return (
               <article
                 key={slide.title}
-                className="absolute left-1/2 top-1/2 overflow-hidden rounded-[20px] shadow-[0_20px_45px_rgba(15,23,42,0.18)] transition-all duration-700 ease-out"
+                className={`absolute left-1/2 top-1/2 overflow-hidden rounded-[14px] sm:rounded-[20px] shadow-[0_12px_28px_rgba(15,23,42,0.16)] transition-all duration-700 ease-out ${shouldHideOnMobile ? "hidden sm:block" : "block"}`}
                 style={{
                   width: baseWidth,
                   aspectRatio: "16 / 7",
@@ -97,6 +99,8 @@ const HeroBanner = () => {
                   src={slide.image}
                   alt={slide.title}
                   className="h-full w-full object-cover"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
                 />
                 <div
                   className="absolute inset-0 bg-slate-900 transition-opacity duration-700"
@@ -107,15 +111,15 @@ const HeroBanner = () => {
           })}
         </div>
 
-        <div className="mt-4 flex items-center justify-center gap-5">
+        <div className="mt-3 sm:mt-4 flex items-center justify-center gap-4 sm:gap-5">
           <button
             onClick={() =>
               setCurrentSlide((s) => (s - 1 + SLIDES.length) % SLIDES.length)
             }
-            className="flex h-7 w-7 items-center justify-center rounded-full text-[18px] text-[#8f939b] transition hover:bg-white/60 hover:text-[#636a75]"
+            className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-[18px] text-[#8f939b] transition hover:bg-white/60 hover:text-[#636a75]"
             aria-label="Previous slide"
           >
-          <ChevronLeftIcon />
+            <ChevronLeftIcon className="w-4 h-4" />
           </button>
 
           <div className="flex items-center gap-2">
@@ -131,10 +135,10 @@ const HeroBanner = () => {
 
           <button
             onClick={() => setCurrentSlide((s) => (s + 1) % SLIDES.length)}
-            className="flex h-7 w-7 items-center justify-center rounded-full text-[18px] text-[#8f939b] transition hover:bg-white/60 hover:text-[#636a75]"
+            className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-[18px] text-[#8f939b] transition hover:bg-white/60 hover:text-[#636a75]"
             aria-label="Next slide"
           >
-         <ChevronRightIcon />
+            <ChevronRightIcon className="w-4 h-4" />
           </button>
         </div>
       </div>

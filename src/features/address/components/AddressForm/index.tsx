@@ -187,7 +187,7 @@ const AddressForm = ({ editAddress, onClose }: Props) => {
           </Button>
 
           <Button type="submit" isLoading={isLoading} fullWidth>
-            {isEdit ? "Save Changes" : "Save Address"}
+            {isEdit ? "Update" : "Save"}
           </Button>
         </div>
       </form>
